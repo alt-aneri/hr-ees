@@ -1,0 +1,499 @@
+
+/* ============================================================
+   HR·EES — dizajn sustav
+   Podloga i tekst su brand-sidra WonderingNeutrona (krem/violet),
+   pa se alat slaže s tekstom u koji je ugrađen.
+   Boje naponskih razina i tipova elektrana NISU dekoracija — izvedene
+   su iz koda na jednopolnim shemama mreže (400 kV crvena, 220 kV
+   zelena, 110 kV plava) i zato ostaju; samo su ugođene da drže
+   kontrast na krem podlozi umjesto na bijeloj.
+   ============================================================ */
+:root{
+  --paper:#F0E7D8;
+  --panel:#F8F1E6;
+  --ink:#301728;
+  --muted:#8A7A8E;
+  --line:#DCCDBB;
+  --grid:rgba(48,23,40,.055);
+  --kv400:#B03A2B;
+  --kv220:#2E6B48;
+  --kv110:#2F5B90;
+  --amber:#A87B12;
+  --c-hidro:#2F5B90;
+  --c-hidro-2:#6E93BE;
+  --c-termo:#82552F;
+  --c-ugljen:#453B36;
+  --c-nuk:#6B4A75;
+  --c-vjetar:#2C7A70;
+  --c-sunce:#A87B12;
+  --c-geo:#A33F62;
+  --c-ts:#301728;
+  --paper-blur:rgba(240,231,216,.9);
+  --panel-2:#FCF7EE;
+  --btn-hover:#1E0E19;
+  --land:#E6DAC7;
+  --land-line:#BCAA95;
+  --isle-line:#C4B5A2;
+  --map-lbl:#5E4A58;
+  --warn-bg:#F6EBD3;
+  --warn-line:#DFC489;
+  --warn-ink:#7A5E10;
+  --sem-g-ink:var(--kv220);
+  --sem-g-line:#BBD2BE;
+  --sem-g-bg:#E9F0E6;
+  --sem-r-ink:var(--kv400);
+  --sem-r-line:#E0BAB0;
+  --sem-r-bg:#F7E7E1;
+  --area-op:.3;
+  --soon-op:.25;
+  --hover-bg:rgba(48,23,40,.06);
+  --r:6px;
+  --shadow:0 1px 2px rgba(48,23,40,.07), 0 8px 24px rgba(48,23,40,.06);
+}
+
+/* ---------- tamna varijanta ----------
+   Sidra se zrcale (krem↔violet), a boje naponskih razina i tipova
+   elektrana se posvjetljuju: iste boje koje drže kontrast na krem
+   podlozi na tamnoj postaju premutne. Vrijedi i za automatski odabir
+   po OS-u i za izbor koji roditeljska stranica pošalje (data-theme). */
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#301728;
+    --panel:#3B2033;
+    --ink:#F0E7D8;
+    --muted:#B3A3B8;
+    --line:#4E3346;
+    --grid:rgba(240,231,216,.05);
+    --kv400:#D4705C;
+    --kv220:#6FAF87;
+    --kv110:#7BA6D9;
+    --amber:#D9AE55;
+    --c-hidro:#7BA6D9;
+    --c-hidro-2:#9CC0E4;
+    --c-termo:#C08B5E;
+    --c-ugljen:#9C8D83;
+    --c-nuk:#A488B3;
+    --c-vjetar:#4FBAA6;
+    --c-sunce:#D9AE55;
+    --c-geo:#D07B9C;
+    --c-ts:#F0E7D8;
+    --paper-blur:rgba(48,23,40,.9);
+    --panel-2:#472842;
+    --btn-hover:#F7F0E4;
+    --land:#3E2437;
+    --land-line:#5F3D55;
+    --isle-line:#573650;
+    --map-lbl:#C4B4C6;
+    --warn-bg:#3E2E20;
+    --warn-line:#6E5626;
+    --warn-ink:#E0BF7B;
+    --sem-g-line:#3E5C48;
+    --sem-g-bg:#25332A;
+    --sem-r-line:#6B3B31;
+    --sem-r-bg:#3B221E;
+    --area-op:.58;
+    --soon-op:.4;
+    --hover-bg:rgba(240,231,216,.08);
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.28);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#301728;
+  --panel:#3B2033;
+  --ink:#F0E7D8;
+  --muted:#B3A3B8;
+  --line:#4E3346;
+  --grid:rgba(240,231,216,.05);
+  --kv400:#D4705C;
+  --kv220:#6FAF87;
+  --kv110:#7BA6D9;
+  --amber:#D9AE55;
+  --c-hidro:#7BA6D9;
+  --c-hidro-2:#9CC0E4;
+  --c-termo:#C08B5E;
+  --c-ugljen:#9C8D83;
+  --c-nuk:#A488B3;
+  --c-vjetar:#4FBAA6;
+  --c-sunce:#D9AE55;
+  --c-geo:#D07B9C;
+  --c-ts:#F0E7D8;
+  --paper-blur:rgba(48,23,40,.9);
+  --panel-2:#472842;
+  --btn-hover:#F7F0E4;
+  --land:#3E2437;
+  --land-line:#5F3D55;
+  --isle-line:#573650;
+  --map-lbl:#C4B4C6;
+  --warn-bg:#3E2E20;
+  --warn-line:#6E5626;
+  --warn-ink:#E0BF7B;
+  --sem-g-line:#3E5C48;
+  --sem-g-bg:#25332A;
+  --sem-r-line:#6B3B31;
+  --sem-r-bg:#3B221E;
+  --area-op:.58;
+  --soon-op:.4;
+  --hover-bg:rgba(240,231,216,.08);
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{
+  font-family:'IBM Plex Sans',system-ui,sans-serif;
+  color:var(--ink);
+  background:var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:34px 34px;
+  line-height:1.6;
+  font-size:16.5px;
+}
+::selection{background:var(--kv400);color:var(--paper)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px dashed var(--kv400);outline-offset:3px;border-radius:2px}
+.mono{font-family:'IBM Plex Mono',monospace}
+
+/* ---------- header ---------- */
+header{
+  position:sticky;top:0;z-index:60;
+  background:var(--paper-blur);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.head-in{display:flex;align-items:center;gap:28px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:15px;letter-spacing:.06em;text-decoration:none}
+.logo .sq{width:12px;height:12px;background:var(--kv400);display:inline-block}
+.logo small{color:var(--muted);font-weight:400;font-size:11px;letter-spacing:.12em}
+nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;color:var(--muted);padding:8px 12px;border-radius:4px;white-space:nowrap;
+}
+nav a:hover{color:var(--ink);background:var(--hover-bg)}
+
+/* ---------- hero ---------- */
+.hero{padding:76px 0 30px}
+.hero h1{
+  font-family:'Archivo',sans-serif;font-weight:800;
+  font-size:clamp(2.5rem,6.4vw,4.7rem);
+  line-height:1.02;letter-spacing:-.025em;max-width:19ch;
+}
+.hero h1 em{font-style:normal;color:var(--kv400)}
+.hero .sub{margin-top:22px;max-width:64ch;font-size:1.12rem;color:var(--muted)}
+.hero .sub strong{color:var(--ink);font-weight:600}
+.kv-key{display:flex;gap:18px;flex-wrap:wrap;margin-top:26px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted)}
+.kv-key span{display:flex;align-items:center;gap:8px}
+.kv-key i{width:26px;height:3px;display:inline-block}
+.flow-svg{width:100%;height:auto;display:block;margin-top:40px}
+
+/* traka sa "stanjem sustava" */
+.ticker{
+  margin-top:36px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+  padding:12px 0;display:flex;gap:34px;flex-wrap:wrap;align-items:center;
+  font-family:'IBM Plex Mono',monospace;font-size:13px;
+}
+.ticker .live{display:flex;align-items:center;gap:8px;color:var(--kv400);font-weight:600;letter-spacing:.1em;font-size:11px}
+.ticker .dot{width:8px;height:8px;border-radius:50%;background:var(--kv400);animation:pulse 1.6s infinite}
+.ticker b{font-weight:600}
+.ticker small{color:var(--muted);font-size:11px;margin-left:auto}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+
+/* ---------- sekcije ---------- */
+section{padding:92px 0 84px;border-top:1px solid var(--line)}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);display:flex;align-items:center;gap:10px;margin-bottom:14px;
+}
+.eyebrow::before{content:"";width:10px;height:10px;background:var(--acc,var(--kv400))}
+h2{font-family:'Archivo',sans-serif;font-weight:700;font-size:clamp(1.7rem,3.4vw,2.5rem);letter-spacing:-.02em;line-height:1.1;max-width:26ch}
+.lead{margin-top:16px;max-width:70ch;color:var(--muted)}
+.lead strong{color:var(--ink)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+
+/* ---------- 01 lanac sustava ---------- */
+.chain{display:flex;align-items:stretch;gap:0;margin-top:40px;overflow-x:auto;padding-bottom:8px}
+.chain .node{
+  flex:1 1 0;min-width:148px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+  border-top:4px solid var(--nc,var(--ink));padding:14px 14px 12px;text-align:left;transition:transform .15s,box-shadow .15s;
+}
+.chain .node:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.chain .node.on{border-color:var(--ink);box-shadow:var(--shadow)}
+.chain .node .ic{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.08em}
+.chain .node h3{font-family:'Archivo',sans-serif;font-size:15.5px;font-weight:700;margin-top:6px;line-height:1.25}
+.chain .node p{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.45}
+.chain .lnk{flex:0 0 34px;display:flex;align-items:center;justify-content:center}
+.chain .lnk svg{width:34px;height:18px;overflow:visible}
+.chain .lnk line{stroke-width:2.5;stroke-dasharray:5 4;animation:flow 1.1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-9}}
+.chain-detail{margin-top:22px;padding:24px 26px}
+.chain-detail h3{font-family:'Archivo',sans-serif;font-size:1.15rem;display:flex;align-items:center;gap:10px}
+.chain-detail h3 i{width:11px;height:11px;display:inline-block}
+.chain-detail p{margin-top:10px;color:var(--muted);max-width:90ch}
+.chain-detail .facts{display:flex;gap:26px;flex-wrap:wrap;margin-top:16px;font-family:'IBM Plex Mono',monospace;font-size:12.5px}
+.chain-detail .facts div b{display:block;font-size:16px;color:var(--ink)}
+.chain-detail .facts div{color:var(--muted)}
+
+/* ---------- 02 karta ---------- */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:28px}
+.chip{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.05em;
+  border:1px solid var(--line);background:var(--panel);border-radius:4px;padding:7px 12px;
+  display:flex;align-items:center;gap:8px;color:var(--muted);
+}
+.chip i{width:9px;height:9px;border-radius:50%;display:inline-block;background:var(--cc,var(--ink))}
+.chip.sqi i{border-radius:1px}
+.chip.li i{width:18px;height:3px;border-radius:0}
+.chip.on{border-color:var(--ink);color:var(--ink);background:var(--panel-2)}
+.chip.off{opacity:.42}
+.map-grid{display:grid;grid-template-columns:1fr 320px;gap:22px;margin-top:20px;align-items:start}
+.map-box{padding:10px;position:relative}
+#mapSvg{width:100%;height:auto;display:block}
+#mapSvg .land{fill:var(--land);stroke:var(--land-line);stroke-width:1.1}
+#mapSvg .isle{fill:var(--land);stroke:var(--isle-line);stroke-width:.8}
+#mapSvg .sea-label,#mapSvg .cty{font-family:'IBM Plex Mono',monospace;fill:var(--muted);font-size:11px;letter-spacing:.2em}
+#mapSvg .plant{cursor:pointer;transition:opacity .15s}
+#mapSvg .plant circle{fill-opacity:.85}
+#mapSvg .plant circle.st-off{fill-opacity:0}
+#mapSvg .plant circle.st-soon{fill-opacity:var(--soon-op)}
+.area{fill-opacity:var(--area-op)}
+#mapSvg .plant:hover circle,#mapSvg .plant:hover rect{stroke:var(--ink);stroke-width:2}
+#mapSvg .lbl{font-family:'IBM Plex Mono',monospace;font-size:9.5px;fill:var(--map-lbl);pointer-events:none}
+#mapSvg .ic-lbl{font-family:'IBM Plex Mono',monospace;font-size:9.5px;fill:var(--kv400)}
+.tip{
+  position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-family:'IBM Plex Mono',monospace;
+  font-size:11.5px;padding:6px 9px;border-radius:4px;transform:translate(-50%,-140%);white-space:nowrap;
+  opacity:0;transition:opacity .12s;z-index:5;
+}
+.map-side{position:sticky;top:84px;display:flex;flex-direction:column;gap:14px}
+.map-detail{padding:20px}
+.map-detail .tag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;display:inline-flex;align-items:center;gap:7px;color:var(--muted)}
+.map-detail .tag i{width:9px;height:9px;border-radius:50%;background:var(--tc,var(--ink))}
+.map-detail .tag.owner{margin-left:10px;padding:1px 6px;border:1px solid var(--line);border-radius:3px;color:var(--ink);font-size:9.5px}
+.map-detail h3{font-family:'Archivo',sans-serif;font-size:1.25rem;margin-top:8px;line-height:1.2}
+.map-detail .mw{font-family:'IBM Plex Mono',monospace;font-size:14px;margin-top:4px;color:var(--kv400);font-weight:600}
+.map-detail p{font-size:13.5px;color:var(--muted);margin-top:10px}
+.map-stats{padding:18px 20px}
+.map-stats h4{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.map-stats ul{list-style:none;margin-top:10px}
+.map-stats li{display:flex;justify-content:space-between;gap:12px;font-size:13px;padding:5px 0;border-bottom:1px dashed var(--line)}
+.map-stats li:last-child{border:none}
+.map-stats li b{font-family:'IBM Plex Mono',monospace;font-weight:600;white-space:nowrap}
+.foot-note{font-size:12px;color:var(--muted);margin-top:14px;font-family:'IBM Plex Mono',monospace}
+
+/* ---------- 03 opterećenje ---------- */
+.ctrl-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px;align-items:flex-end}
+.ctrl{display:flex;flex-direction:column;gap:6px}
+.ctrl label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.ctrl label b{color:var(--ink)}
+.seg{display:flex;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--panel)}
+.seg button{padding:8px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;background:transparent;border:none;color:var(--muted)}
+.seg button.on{background:var(--ink);color:var(--paper)}
+input[type=range]{accent-color:var(--kv400);width:190px}
+.chart-card{margin-top:20px;padding:18px 18px 12px}
+.chart-card svg{width:100%;height:auto;display:block}
+.ax{font-family:'IBM Plex Mono',monospace;font-size:10.5px;fill:var(--muted)}
+.legend{display:flex;gap:22px;flex-wrap:wrap;margin-top:8px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:8px}
+.legend i{width:20px;height:3px;display:inline-block}
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:20px}
+.stat{padding:14px 16px}
+.stat small{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.stat b{display:block;font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;margin-top:4px}
+.stat b u{text-decoration:none;font-size:13px;color:var(--muted)}
+.note-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:34px}
+.note{padding:20px 22px}
+.note h4{font-family:'Archivo',sans-serif;font-size:1.02rem;display:flex;gap:9px;align-items:baseline}
+.note h4 span{font-family:'IBM Plex Mono',monospace;color:var(--kv400);font-size:.85rem}
+.note p{font-size:13.5px;color:var(--muted);margin-top:8px}
+
+/* ---------- 04 tehnologije ---------- */
+.tech-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px;margin-top:36px}
+.tech{overflow:hidden}
+.tech-head{width:100%;background:transparent;border:none;text-align:left;padding:18px 20px;display:flex;align-items:center;gap:14px}
+.tech-head .sw{width:12px;height:12px;flex:0 0 12px;border-radius:2px}
+.tech-head h3{font-family:'Archivo',sans-serif;font-size:1.05rem;font-weight:700;flex:1}
+.tech-head .role{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line);border-radius:3px;padding:3px 7px;color:var(--muted);white-space:nowrap}
+.tech-head .pm{font-family:'IBM Plex Mono',monospace;font-size:18px;color:var(--muted)}
+.tech-body{display:none;padding:0 20px 20px;border-top:1px dashed var(--line)}
+.tech.open .tech-body{display:block}
+.tech-body .meta{display:flex;gap:22px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);padding:12px 0}
+.tech-body .meta b{color:var(--ink)}
+.tech-body p{font-size:13.5px;color:var(--muted)}
+.pn{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pn h5{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase}
+.pn .p h5{color:var(--kv220)}
+.pn .n h5{color:var(--kv400)}
+.pn ul{list-style:none;margin-top:8px}
+.pn li{font-size:12.8px;color:var(--muted);padding:4px 0 4px 14px;position:relative;line-height:1.4}
+.pn .p li::before{content:"+";position:absolute;left:0;color:var(--kv220);font-family:'IBM Plex Mono',monospace}
+.pn .n li::before{content:"−";position:absolute;left:0;color:var(--kv400);font-family:'IBM Plex Mono',monospace}
+.tech-body .hr-ctx{margin-top:14px;font-size:12.5px;border-left:3px solid var(--acc-t,var(--ink));padding:6px 0 6px 12px;color:var(--ink)}
+
+/* ---------- 05 simulator ---------- */
+.sim-grid{display:grid;grid-template-columns:300px 1fr;gap:22px;margin-top:34px;align-items:start}
+.sim-ctrl{padding:20px;display:flex;flex-direction:column;gap:18px;position:sticky;top:84px}
+.sim-ctrl .ctrl input[type=range]{width:100%}
+.sim-out{display:flex;flex-direction:column;gap:16px}
+.big-reads{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px}
+.dispatch-bar{padding:18px}
+.dispatch-bar h4,.supply-card h4,.freq-card h4{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.dbar{display:flex;height:46px;border-radius:4px;overflow:hidden;border:1px solid var(--line)}
+.dbar div{height:100%;min-width:0;transition:width .25s}
+.dleg{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted)}
+.dleg span{display:flex;align-items:center;gap:7px}
+.dleg i{width:10px;height:10px;border-radius:2px}
+.supply-card{padding:18px}
+.msgs{padding:16px 20px;font-size:13.5px}
+.msgs ul{list-style:none}
+.msgs li{padding:6px 0 6px 18px;position:relative;color:var(--muted)}
+.msgs li::before{content:"▸";position:absolute;left:0;color:var(--kv400);font-size:11px;top:9px}
+.msgs li b{color:var(--ink)}
+
+/* ---------- 06 analitika ---------- */
+.freq-card{padding:18px;margin-top:24px}
+.btn{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--ink);color:var(--paper);border:none;border-radius:4px;padding:11px 18px;
+}
+.btn:hover{background:var(--btn-hover)}
+.ana-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:26px}
+.ana{padding:22px}
+.ana h3{font-family:'Archivo',sans-serif;font-size:1.08rem}
+.ana p{font-size:13.5px;color:var(--muted);margin-top:8px}
+.ana table{width:100%;border-collapse:collapse;margin-top:12px;font-size:12.5px}
+.ana th{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;text-align:left;color:var(--muted);padding:6px 8px 6px 0;border-bottom:1px solid var(--line)}
+.ana td{padding:7px 8px 7px 0;border-bottom:1px dashed var(--line);color:var(--muted);vertical-align:top}
+.ana td:first-child{font-family:'IBM Plex Mono',monospace;color:var(--ink);font-weight:600;white-space:nowrap}
+.warn{background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:var(--r);padding:14px 18px;font-size:13px;color:var(--warn-ink);margin-top:18px}
+.warn b{font-family:'IBM Plex Mono',monospace}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--ink);padding:40px 0 60px;margin-top:40px}
+footer .f-in{display:flex;gap:30px;flex-wrap:wrap;justify-content:space-between;font-size:12.5px;color:var(--muted)}
+footer .mono{font-size:11px;letter-spacing:.1em}
+
+/* ---------- responzivno & pristupačnost ---------- */
+@media (max-width:960px){
+  .map-grid,.sim-grid{grid-template-columns:1fr}
+  .map-side,.sim-ctrl{position:static}
+  .pn{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ============================================================
+   Dodaci: hub + samostalni alati
+   ============================================================ */
+/* traka za povratak na alatnim stranicama */
+.backbar{border-bottom:1px solid var(--line);background:var(--paper-blur);backdrop-filter:blur(8px);position:sticky;top:0;z-index:60}
+.backbar .wrap{display:flex;align-items:center;gap:20px;height:56px}
+.backbar a{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--muted)}
+.backbar a:hover{color:var(--ink)}
+.backbar .logo{font-size:14px}
+.tool-page section{border-top:none;padding:44px 0 72px}
+
+/* hub: mreža alata */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:36px}
+a.tool-card{display:block;text-decoration:none;padding:24px 24px 20px;transition:transform .15s,box-shadow .15s;border-top:4px solid var(--tc,var(--ink))}
+a.tool-card:hover{transform:translateY(-3px);box-shadow:0 2px 4px rgba(48,23,40,.09),0 14px 34px rgba(48,23,40,.11)}
+a.tool-card .eyebrow{margin-bottom:8px}
+a.tool-card h3{font-family:'Archivo',sans-serif;font-size:1.28rem;font-weight:700;letter-spacing:-.01em;line-height:1.15}
+a.tool-card p{font-size:13.5px;color:var(--muted);margin-top:8px;min-height:3.6em}
+a.tool-card .go{display:inline-block;margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;color:var(--kv400);font-weight:600}
+
+/* karta: zoom i tokovi */
+.zoom-btns{position:absolute;top:16px;right:16px;display:flex;flex-direction:column;gap:6px;z-index:4}
+.zoom-btns button{width:36px;height:36px;border:1px solid var(--line);background:var(--panel);border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:17px;line-height:1;box-shadow:var(--shadow)}
+.zoom-btns button:hover{border-color:var(--ink)}
+#mapSvg{cursor:grab;touch-action:none}
+#mapSvg:active{cursor:grabbing}
+#mapSvg.flow #gVod path{stroke-dasharray:9 7 !important;animation:flowline .9s linear infinite}
+@keyframes flowline{to{stroke-dashoffset:-16}}
+
+/* scenarij-laboratorij */
+.scn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-top:34px}
+.scn{padding:22px 22px 18px;display:flex;flex-direction:column}
+.scn h3{font-family:'Archivo',sans-serif;font-size:1.12rem;line-height:1.2;padding-right:30px}
+.scn>p{font-size:13px;color:var(--muted);margin-top:8px}
+.scn .nums{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted)}
+.scn .nums b{color:var(--ink);font-weight:600}
+.scn .sem{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.sem span{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-radius:3px;padding:4px 8px;border:1px solid}
+.sem .g{color:var(--sem-g-ink);border-color:var(--sem-g-line);background:var(--sem-g-bg)}
+.sem .y{color:var(--warn-ink);border-color:var(--warn-line);background:var(--warn-bg)}
+.sem .r{color:var(--sem-r-ink);border-color:var(--sem-r-line);background:var(--sem-r-bg)}
+.scn ul.chainlist{list-style:none;margin-top:14px;border-top:1px dashed var(--line);padding-top:12px}
+.scn ul.chainlist li{font-size:12.8px;color:var(--muted);padding:4px 0 4px 16px;position:relative;line-height:1.45}
+.scn ul.chainlist li::before{content:"→";position:absolute;left:0;color:var(--kv400);font-family:'IBM Plex Mono',monospace;font-size:11px}
+.scn label.cmp{margin-top:auto;padding-top:14px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);display:flex;gap:8px;align-items:center;cursor:pointer}
+.scn label.cmp input{accent-color:var(--kv400)}
+.cmp-wrap{margin-top:26px;padding:20px 22px;overflow-x:auto}
+.cmp-wrap h4{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.cmp-wrap table{width:100%;border-collapse:collapse;font-size:12.8px;min-width:560px}
+.cmp-wrap th{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;text-align:left;color:var(--muted);padding:6px 14px 6px 0;border-bottom:1px solid var(--line)}
+.cmp-wrap td{padding:7px 14px 7px 0;border-bottom:1px dashed var(--line);color:var(--muted);font-family:'IBM Plex Mono',monospace}
+.cmp-wrap td:first-child{color:var(--ink);font-weight:600;font-family:'IBM Plex Sans',sans-serif}
+.cmp-wrap .empty{color:var(--muted);font-size:12.5px;font-family:'IBM Plex Mono',monospace}
+
+/* embed način (?embed=1 u iframeu) */
+.embed header,.embed footer,.embed .backbar{display:none!important}
+.embed section{padding:18px 0 26px}
+.embed body{background-image:none}
+
+/* ============================================================
+   Dorade dizajna v2 (svijetla tema)
+   ============================================================ */
+:root{--r:8px}
+h2{text-wrap:balance}
+.lead{text-wrap:pretty}
+.card{border-radius:var(--r)}
+.chip,.btn,.seg button{transition:background .12s,color .12s,border-color .12s}
+a.tool-card .go{transition:transform .15s}
+a.tool-card:hover .go{transform:translateX(5px)}
+.chain .node{border-radius:var(--r)}
+.stat b{letter-spacing:-.01em}
+.ax{font-size:11px}
+.warn{border-radius:var(--r)}
+.tech-head:hover h3{color:var(--kv400)}
+.map-detail h3{text-wrap:balance}
+footer .f-in{align-items:flex-start}
+@media (max-width:640px){
+  .hero{padding:52px 0 22px}
+  .ticker{gap:18px}
+  section{padding:64px 0 56px}
+  input[type=range]{width:100%}
+  .ctrl{flex:1 1 160px}
+}
+
+/* trokut snaga (jalova energija) */
+.pf-widget{margin-top:14px;border-top:1px dashed var(--line);padding-top:14px}
+.pf-widget label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px}
+.pf-widget label b{color:var(--ink)}
+.pf-widget input[type=range]{width:100%;accent-color:var(--kv400)}
+.pf-widget svg{width:100%;height:auto;display:block;margin-top:8px}
+.pf-out{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.7}
+.pf-out b{color:var(--ink)}
+
+/* vlastiti scenarij */
+#customScn .nums{border-top:1px dashed var(--line);padding-top:14px}
+#customScn h3{color:var(--kv400)}
+
+/* ---- Pohrana: zaseban blok ispod lanca (nije karika u nizu) ---- */
+.storage-wrap{margin-top:18px}
+.storage-card{border-left:3px solid var(--nc)}
+.storage-card h3{display:flex;align-items:center;gap:9px;margin-bottom:2px}
+.storage-card h3 i{width:10px;height:10px;border-radius:2px;flex:0 0 auto}
+.storage-card .storage-sub{color:var(--muted);font-size:.9rem;margin-bottom:10px}
+.storage-card .facts{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:12px}
+.storage-card .facts span{display:flex;flex-direction:column;font-size:.82rem;color:var(--muted)}
+.storage-card .facts b{font-family:"IBM Plex Mono",monospace;font-size:1.02rem;color:var(--ink)}
+
+/* ---- Granice županija (Natural Earth) ---- */
+.counties{pointer-events:none}
+.county{fill:none;stroke:var(--ink);stroke-width:.5;stroke-opacity:.18}

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hrvatski elektroenergetski sustav — interaktivni vodič</title>
+<meta name="description" content="Edukativni vodič kroz hrvatski elektroenergetski sustav s pet interaktivnih alata: karta elektrana i mreže, krivulje opterećenja, dispečerski simulator, scenariji i frekvencijski odziv.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header>
+  <div class="wrap head-in">
+    <a class="logo" href="#top"><span class="sq"></span>HR·EES <small>400 / 220 / 110 kV</small></a>
+    <nav aria-label="Glavna navigacija">
+      <a href="#sustav">Sustav</a>
+      <a href="#alati">Alati</a>
+      <a href="#tehnologije">Tehnologije</a>
+      <a href="#analitika">Analitika</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero wrap" id="top">
+  <h1>Kako struja putuje <em>Hrvatskom</em></h1>
+  <p class="sub">Interaktivni vodič kroz hrvatski elektroenergetski sustav — od <strong>Zakučca i Plomina</strong> do utičnice u vašem domu. Vodič kroz sustav i <strong>pet interaktivnih alata</strong>: karta stvarnih elektrana i 400 kV mreže, krivulje opterećenja, dispečerski simulator, scenarij-laboratorij i frekvencijski odziv.</p>
+  <div class="kv-key" aria-hidden="true">
+    <span><i style="background:var(--kv400)"></i>400 kV — prijenos</span>
+    <span><i style="background:var(--kv220)"></i>220 kV — prijenos</span>
+    <span><i style="background:var(--kv110)"></i>110 kV — prijenos/distribucija</span>
+  </div>
+
+  <!-- animirana jednopolna shema: elektrana → transformacija → prijenos → distribucija → potrošač -->
+  <svg class="flow-svg" viewBox="0 0 1030 130" role="img" aria-label="Shema toka energije od elektrane do potrošača">
+    <!-- generator -->
+    <circle cx="60" cy="65" r="26" fill="none" stroke="var(--ink)" stroke-width="2.5"/>
+    <text x="60" y="72" text-anchor="middle" font-family="IBM Plex Mono" font-size="20" fill="var(--ink)">G</text>
+    <text x="60" y="118" text-anchor="middle" class="ax">ELEKTRANA</text>
+    <!-- blok transformator -->
+    <circle cx="180" cy="58" r="16" fill="none" stroke="var(--ink)" stroke-width="2"/>
+    <circle cx="180" cy="74" r="16" fill="none" stroke="var(--ink)" stroke-width="2"/>
+    <text x="180" y="118" text-anchor="middle" class="ax">TS 15/400 kV</text>
+    <line x1="86" y1="65" x2="163" y2="65" stroke="var(--ink)" stroke-width="2.5"/>
+    <!-- 400 kV vod (stup) -->
+    <g stroke="var(--kv400)" stroke-width="3">
+      <line class="fl" x1="197" y1="65" x2="470" y2="65" stroke-dasharray="10 7"/>
+    </g>
+    <g stroke="var(--ink)" stroke-width="2" fill="none">
+      <path d="M330 90 L342 40 L354 90 M328 55 h28 M330 66 h24"/>
+    </g>
+    <text x="342" y="118" text-anchor="middle" class="ax">PRIJENOS 400 kV · HOPS</text>
+    <!-- TS 400/110 -->
+    <circle cx="490" cy="58" r="16" fill="none" stroke="var(--ink)" stroke-width="2"/>
+    <circle cx="490" cy="74" r="16" fill="none" stroke="var(--ink)" stroke-width="2"/>
+    <text x="490" y="118" text-anchor="middle" class="ax">TS 400/110 kV</text>
+    <!-- 110 kV -->
+    <line class="fl" x1="507" y1="65" x2="700" y2="65" stroke="var(--kv110)" stroke-width="3" stroke-dasharray="10 7"/>
+    <text x="603" y="118" text-anchor="middle" class="ax">110 kV</text>
+    <!-- TS 110/10 -->
+    <circle cx="720" cy="58" r="16" fill="none" stroke="var(--ink)" stroke-width="2"/>
+    <circle cx="720" cy="74" r="16" fill="none" stroke="var(--ink)" stroke-width="2"/>
+    <text x="720" y="118" text-anchor="middle" class="ax">TS 110/10(20) kV</text>
+    <!-- distribucija -->
+    <line class="fl" x1="737" y1="65" x2="930" y2="65" stroke="var(--kv220)" stroke-width="3" stroke-dasharray="10 7"/>
+    <text x="833" y="118" text-anchor="middle" class="ax">DISTRIBUCIJA · HEP ODS</text>
+    <!-- kuća -->
+    <g stroke="var(--ink)" stroke-width="2.5" fill="none">
+      <path d="M950 80 v-16 l20 -16 20 16 v16 z"/>
+    </g>
+    <text x="970" y="118" text-anchor="middle" class="ax">POTROŠAČ 0,4 kV</text>
+    <style>.fl{animation:flow 1.15s linear infinite}</style>
+  </svg>
+
+  <div class="ticker" role="status">
+    <span class="live"><span class="dot"></span>SUSTAV</span>
+    <span>f = <b id="tkF">50,00</b> Hz</span>
+    <span>P ≈ <b id="tkP">2 480</b> MW</span>
+    <span>razmjena: <b id="tkX">uvoz 410 MW</b></span>
+    <span><b id="tkT">--:--</b> CET</span>
+    <small>ilustrativni prikaz, nije stvarno mjerenje</small>
+  </div>
+</div>
+<!-- ============ 01 · ŠTO ČINI SUSTAV ============ -->
+<section id="sustav" style="--acc:var(--kv400)">
+  <div class="wrap">
+    <div class="eyebrow">01 · Arhitektura sustava</div>
+    <h2>Od turbine do utičnice: lanac koji nikad ne staje</h2>
+    <p class="lead">Elektroenergetski sustav (EES) je najveći stroj koji je čovjek izgradio — i radi bez skladišta u sredini: <strong>proizvodnja i potrošnja moraju biti jednake u svakoj sekundi</strong>. Kliknite na pojedinu kariku lanca da vidite njezinu ulogu u hrvatskom sustavu.</p>
+
+    <div class="chain" id="chain" role="tablist" aria-label="Komponente sustava"></div>
+    <div class="chain-detail card" id="chainDetail"></div>
+    <div id="storageBox" class="storage-wrap"></div>
+  </div>
+</section>
+
+<!-- ============ 02 · ALATI ============ -->
+<section id="alati" style="--acc:var(--kv400)">
+  <div class="wrap">
+    <div class="eyebrow">02 · Interaktivni alati</div>
+    <h2>Pet alata za istraživanje sustava</h2>
+    <p class="lead">Svaki alat je samostalna stranica — može se otvoriti zasebno, podijeliti poveznicom ili ugraditi u članak.</p>
+    <div class="tools-grid">
+      <a class="tool-card card" href="alat-karta.html" style="--tc:var(--kv110)">
+        <div class="eyebrow">Alat 01</div><h3>Karta mreže</h3>
+        <p>Stvarne elektrane, 400 kV okosnica i sedam interkonekcija — sa zoomom, slojevima po tipu i animacijom tokova.</p>
+        <span class="go">Otvori kartu →</span>
+      </a>
+      <a class="tool-card card" href="alat-opterecenje.html" style="--tc:var(--kv220)">
+        <div class="eyebrow">Alat 02</div><h3>Krivulje opterećenja</h3>
+        <p>Dnevni ritam potrošnje po sezonama te kako sunce i vjetar oblikuju rezidualno opterećenje ("pačja krivulja").</p>
+        <span class="go">Otvori krivulje →</span>
+      </a>
+      <a class="tool-card card" href="alat-simulator.html" style="--tc:var(--kv400)">
+        <div class="eyebrow">Alat 03</div><h3>Dispečerski simulator</h3>
+        <p>Merit order na hrvatskom voznom parku: tko pokriva potrošnju, tko postavlja cijenu i koliko se emitira.</p>
+        <span class="go">Otvori simulator →</span>
+      </a>
+      <a class="tool-card card" href="alat-scenariji.html" style="--tc:var(--amber)">
+        <div class="eyebrow">Alat 04</div><h3>Scenarij-laboratorij</h3>
+        <p>Šest "što-ako" scenarija — od sušne godine do elektrifikacije 2035. — s lancem posljedica i usporedbom.</p>
+        <span class="go">Otvori scenarije →</span>
+      </a>
+      <a class="tool-card card" href="alat-frekvencija.html" style="--tc:var(--kv110)">
+        <div class="eyebrow">Alat 05</div><h3>Frekvencijski odziv</h3>
+        <p>Ispad bloka u otočnom pogonu: inercija, FCR, aFRR i podfrekventno rasterećenje — njihajna jednadžba uživo.</p>
+        <span class="go">Otvori simulaciju →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 · TEHNOLOGIJE ============ -->
+<section id="tehnologije" style="--acc:var(--c-sunce)">
+  <div class="wrap">
+    <div class="eyebrow">03 · Tehnologije proizvodnje</div>
+    <h2>Nijedna tehnologija nije savršena — zato ih kombiniramo</h2>
+    <p class="lead">Svaka tehnologija ima svoju ulogu: <strong>bazne</strong> jedinice rade gotovo neprekidno, <strong>vršne i fleksibilne</strong> prate promjene, a <strong>varijabilni obnovljivi izvori</strong> proizvode kad ima resursa. Otvorite karticu za princip rada, prednosti, nedostatke i ulogu u hrvatskom sustavu.</p>
+    <div class="tech-grid" id="techGrid"></div>
+  </div>
+</section>
+
+<!-- ============ 04 · ANALITIKA ============ -->
+<section id="analitika" style="--acc:var(--kv110)">
+  <div class="wrap">
+    <div class="eyebrow">04 · Analitika mreže i tržišta</div>
+    <h2>Kako se sustavom upravlja iz sata u sat</h2>
+    <p class="lead">Pravila i mehanizmi koji drže mrežu stabilnom: sigurnosni kriterij N-1, hijerarhija rezervi, tržište koje se sudara s fizikom te uloga pohrane. Dinamiku frekvencije istraži u alatu <a href="alat-frekvencija.html"><strong>Frekvencijski odziv</strong></a>.</p>
+<div class="ana-grid">
+      <div class="card ana">
+        <h3>Sigurnosni kriterij N-1</h3>
+        <p>Mreža se vodi tako da ispad bilo kojeg pojedinog elementa — voda, transformatora ili najvećeg bloka — ne smije izazvati prekid napajanja ni kaskadu preopterećenja. Dispečeri HOPS-a kontinuirano provode proračune tokova snaga za stotine "što ako" scenarija; kad bi ispad voda preopteretio susjedni, primjenjuje se <b>redispečing</b>: jedna elektrana smanjuje, druga povećava proizvodnju kako bi se tok preusmjerio.</p>
+      </div>
+      <div class="card ana">
+        <h3>Rezerve za uravnoteženje</h3>
+        <table>
+          <tr><th>Razina</th><th>Aktivacija</th><th>Uloga</th></tr>
+          <tr><td>FCR</td><td>&lt; 30 s, automatski (droop)</td><td>Zaustavlja pad frekvencije; solidarna za cijelu kontinentalnu Europu</td></tr>
+          <tr><td>aFRR</td><td>&lt; 5 min, AGC signal</td><td>Vraća frekvenciju na 50 Hz i razmjenu na ugovorene vrijednosti</td></tr>
+          <tr><td>mFRR</td><td>&lt; 12,5 min, ručno</td><td>Oslobađa aFRR, pokriva veće i dulje debalanse</td></tr>
+        </table>
+        <p style="margin-top:10px">U Hrvatskoj su glavni pružatelji akumulacijske HE i RHE Velebit — hidroagregat mijenja snagu za stotine MW u minutama.</p>
+      </div>
+      <div class="card ana">
+        <h3>Adekvatnost i uvozna ovisnost</h3>
+        <p>Hrvatska godišnje uveze 20–30 % potrošnje — najviše u sušnim godinama kad hidrologija podbaci. Sedam 400 kV interkonekcija čini uvoz pouzdanim, ali izlaganje tržišnim cijenama i zatvaranje termo-blokova u regiji otvaraju pitanje dugoročne adekvatnosti: kombinacija novih OIE, pohrane, fleksibilne potrošnje i čvrstih kapaciteta.</p>
+      </div>
+      <div class="card ana">
+        <h3>Pohrana i fleksibilnost</h3>
+        <p>S rastom solara ključno pitanje postaje <b>kad</b> je energija proizvedena, ne samo koliko. RHE Velebit (276 MW turbinski / 240 MW pumpni pogon) u pogonu je od 1984. i danas radi kao dnevna pohrana sustava — pumpa u podnevnom višku, turbinira u večernjem vrhu. Uz nju se pojavljuju i baterijski sustavi: u registru je 49 najavljenih projekata, zasad nijedan u pogonu. Baterija odgovara u milisekundama, pa je jednako zanimljiva za frekvencijske usluge kao i za pomicanje isporuke energije u danu.</p>
+      </div>
+      <div class="card ana">
+        <h3>Tržište i fizika se susreću</h3>
+        <p>Dan unaprijed trguje se na burzi <b>CROPEX</b> po satima (danas i po 15 minuta), spojenoj s europskim tržištem (SDAC). Vozni redovi se zatim fizički provjeravaju: prekogranični kapaciteti, N-1, naponski profili. Odstupanja u stvarnom vremenu pokriva HOPS energijom uravnoteženja, a trošak se prenosi na subjekte koji su odstupili — snažan poticaj za točne prognoze vjetra, sunca i potrošnje.</p>
+      </div>
+      <div class="card ana">
+        <h3>Gubici i naponske razine</h3>
+        <p>Gubici rastu s kvadratom struje (P = I²R) — zato se energija prenosi na visokom naponu uz malu struju. U prijenosnoj mreži gubi se <b>≈ 2 %</b>, u distribucijskoj <b>≈ 6–8 %</b> energije. Transformacija ide stupnjevito: 400 → 220 → 110 kV (prijenos), zatim 35 → 20/10 → 0,4 kV (distribucija). Naponi se reguliraju preklopkama transformatora i kompenzacijom jalove snage.</p>
+      </div>
+      <div class="card ana">
+        <h3>Jalova snaga: nevidljivi teret mreže</h3>
+        <p>Radna snaga (P, MW) obavlja koristan rad; <b>jalova snaga (Q, Mvar)</b> neprestano se "njiše" između izvora i trošila jer gradi magnetska polja motora i transformatora. Ne obavlja rad, ali zauzima vodove i povećava struju — zato se ne isplati prenositi daleko, nego se proizvodi lokalno: uzbudom generatora, kondenzatorskim baterijama, prigušnicama i pretvaračkim uređajima (STATCOM). Njome operatori <b>reguliraju napon</b>; zanimljivo, dugi podmorski kabeli prema otocima kapacitivno "proizvode" jalovu snagu pa je treba kompenzirati. Industrijski kupci plaćaju prekomjerno preuzetu jalovu energiju — zato pogoni drže faktor snage cos φ blizu 1.</p>
+        <div class="pf-widget">
+          <label>Faktor snage cos φ · <b id="pfVal">0,95</b></label>
+          <input type="range" id="pfR" min="50" max="100" step="1" value="95">
+          <svg id="pfSvg" viewBox="0 0 330 274" role="img" aria-label="Trokut snaga: radna, jalova i prividna snaga"></svg>
+          <p class="pf-out" id="pfOut"></p>
+        </div>
+      </div>
+</div>
+
+    <div class="warn"><b>Napomena:</b> svi modeli na ovoj stranici su edukativna pojednostavljenja stvarnih dispečerskih alata (proračuni tokova snaga, dinamička stabilnost, tržišni algoritmi EUPHEMIA). Brojčani podaci su približni, prema javnim objavama HOPS-a, HEP-a i ENTSO-E.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap f-in">
+    <div>
+      <span class="mono" style="font-weight:600">HR·EES — interaktivni vodič</span><br>
+      Edukativni prikaz hrvatskog elektroenergetskog sustava. Podaci ≈ 2024./2025., zaokruženi.
+    </div>
+    <div class="mono">400 kV ■ 220 kV ■ 110 kV<br>f₀ = 50 Hz · sinkrono područje kontinentalne Europe</div>
+  </div>
+</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+.DS_Store
+
+# lokalne Claude Code postavke (dozvole su po stroju, launch.json ide u repo)
+.claude/settings.local.json
+
+# Zaostali prazni repoi iz ranijeg pokušaja postavljanja (samo LICENSE + README).
+# Ne brišem ih automatski jer su git repoi; kad ih maknemo ručno, ovo ispada.
+/ees/
+/hr-ees/

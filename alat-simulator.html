@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dispečerski simulator (merit order) — HR·EES</title>
+<meta name="description" content="Merit-order simulator hrvatskog EES-a: potrošnja, hidrologija, OIE i cijena uvoza određuju vozni red, cijenu i emisije.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="tool-page">
+<div class="backbar">
+  <div class="wrap">
+    <a class="logo" href="index.html"><span class="sq" style="width:11px;height:11px;background:var(--kv400);display:inline-block;margin-right:9px"></span>HR·EES</a>
+    <a href="index.html#alati">← Svi alati</a>
+    <a href="index.html" style="margin-left:auto">Vodič kroz sustav</a>
+  </div>
+</div>
+<!-- ============ 05 · SIMULATOR ============ -->
+<section id="simulator" style="--acc:var(--kv400)">
+  <div class="wrap">
+    <div class="eyebrow">Alat 03 · Dispečerski simulator</div>
+    <h2>Vi ste dispečer: pokrijte potrošnju uz najniži trošak</h2>
+    <p class="lead">Tržište električne energije slaže elektrane po rastućem graničnom trošku — tzv. <strong>merit order</strong>. Najskuplja jedinica koja još mora raditi određuje cijenu za sve. Mijenjajte potrošnju, hidrologiju, vjetar, sunce i cijenu uvoza pa promatrajte kako se mijenjaju angažman elektrana, cijena i emisije CO₂.</p>
+
+    <div class="sim-grid">
+      <div class="card sim-ctrl">
+        <div class="ctrl">
+          <label>Potrošnja · <b id="demVal">2600</b> MW</label>
+          <input type="range" id="demR" min="1500" max="3500" step="50" value="2600">
+        </div>
+        <div class="ctrl">
+          <label>Hidrologija</label>
+          <div class="seg" id="segHyd">
+            <button data-v="suho">Sušno</button>
+            <button class="on" data-v="prosjek">Prosjek</button>
+            <button data-v="vlazno">Vlažno</button>
+          </div>
+        </div>
+        <div class="ctrl">
+          <label>Vjetar · <b id="swVal">35</b> % od 1160 MW</label>
+          <input type="range" id="swR" min="0" max="100" step="5" value="35">
+        </div>
+        <div class="ctrl">
+          <label>Sunce · <b id="spVal">40</b> % od 1000 MW</label>
+          <input type="range" id="spR" min="0" max="100" step="5" value="40">
+        </div>
+        <div class="ctrl">
+          <label>Cijena uvoza · <b id="impVal">95</b> €/MWh</label>
+          <input type="range" id="impR" min="30" max="220" step="5" value="95">
+        </div>
+        <p style="font-size:11.5px;color:var(--muted);font-family:'IBM Plex Mono',monospace">Granični troškovi i kapaciteti su ilustrativni.</p>
+      </div>
+
+      <div class="sim-out">
+        <div class="big-reads">
+          <div class="card stat"><small>Cijena (marginalna)</small><b id="rPrice">— <u>€/MWh</u></b></div>
+          <div class="card stat"><small>Razmjena</small><b id="rXch">—</b></div>
+          <div class="card stat"><small>Emisije</small><b id="rCO2">— <u>t CO₂/h</u></b></div>
+          <div class="card stat"><small>Udio OIE + hidro</small><b id="rRES">— <u>%</u></b></div>
+        </div>
+        <div class="card dispatch-bar">
+          <h4>Angažman izvora (vozni red)</h4>
+          <div class="dbar" id="dBar"></div>
+          <div class="dleg" id="dLeg"></div>
+        </div>
+        <div class="card supply-card">
+          <h4>Krivulja ponude (merit order) i točka ravnoteže</h4>
+          <svg id="supplyChart" viewBox="0 0 760 300"></svg>
+        </div>
+        <div class="card msgs"><ul id="simMsgs"></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="wrap f-in">
+    <div>
+      <span class="mono" style="font-weight:600">HR·EES — interaktivni vodič</span><br>
+      Edukativni prikaz hrvatskog elektroenergetskog sustava. Podaci ≈ 2024./2025., zaokruženi.
+    </div>
+    <div class="mono">400 kV ■ 220 kV ■ 110 kV<br>f₀ = 50 Hz · sinkrono područje kontinentalne Europe</div>
+  </div>
+</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>

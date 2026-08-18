@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frekvencijski odziv — HR·EES</title>
+<meta name="description" content="Simulacija frekvencijskog odziva hrvatskog EES-a u otočnom pogonu: njihajna jednadžba, FCR, aFRR i podfrekventno rasterećenje.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="tool-page">
+<div class="backbar">
+  <div class="wrap">
+    <a class="logo" href="index.html"><span class="sq" style="width:11px;height:11px;background:var(--kv400);display:inline-block;margin-right:9px"></span>HR·EES</a>
+    <a href="index.html#alati">← Svi alati</a>
+    <a href="index.html" style="margin-left:auto">Vodič kroz sustav</a>
+  </div>
+</div>
+<section id="frekvencija" style="--acc:var(--kv110)">
+  <div class="wrap">
+    <div class="eyebrow">Alat 05 · Frekvencijski odziv</div>
+    <h2>Ispad bloka u otočnom pogonu: inercija, rezerve, rasterećenje</h2>
+    <p class="lead">Iza mirne frekvencije stoji hijerarhija automatske regulacije. Simuliraj <strong>ispad velikog proizvodnog bloka</strong> u hipotetskom otočnom pogonu hrvatskog sustava i promatraj njihalicu frekvencije: inercijski odziv, primarnu regulaciju (FCR) i sekundarnu regulaciju (aFRR) koja frekvenciju vraća na 50 Hz.</p>
+<div class="card freq-card">
+      <h4>Simulacija frekvencijskog odziva · otočni pogon (njihajna jednadžba)</h4>
+      <div class="ctrl-row" style="margin-top:6px">
+        <div class="ctrl">
+          <label>Ispad proizvodnje · <b id="fLossV">300</b> MW</label>
+          <input type="range" id="fLoss" min="100" max="700" step="2" value="300">
+        </div>
+        <div class="ctrl">
+          <label>Inercija H · <b id="fHV">4,0</b> s</label>
+          <input type="range" id="fH" min="1.5" max="6" step="0.1" value="4">
+        </div>
+        <div class="ctrl">
+          <label>Primarna rezerva FCR · <b id="fFcrV">300</b> MW</label>
+          <input type="range" id="fFcr" min="100" max="500" step="10" value="300">
+        </div>
+        <div class="ctrl">
+          <label style="visibility:hidden">.</label>
+          <button class="btn" id="fRun">Simuliraj ispad</button>
+        </div>
+      </div>
+      <svg id="freqChart" viewBox="0 0 780 320" style="margin-top:10px"></svg>
+      <div class="stat-row">
+        <div class="card stat"><small>RoCoF (početni)</small><b id="fRocof">— <u>Hz/s</u></b></div>
+        <div class="card stat"><small>Nadir frekvencije</small><b id="fNadir">— <u>Hz</u></b></div>
+        <div class="card stat"><small>f nakon 60 s</small><b id="fEnd">— <u>Hz</u></b></div>
+        <div class="card stat"><small>Podfrekventno rasterećenje</small><b id="fUfls">—</b></div>
+      </div>
+      <p style="font-size:12.5px;color:var(--muted);margin-top:14px">Model: njihajna jednadžba 2H·S/f₀ · df/dt = ΔP, baza S = 2 600 MW, samoregulacija tereta 2 %/Hz, FCR s droop karakteristikom (puna aktivacija na ±200 mHz, τ ≈ 2 s — hidroagregati), aFRR integrator do 400 MW te četiri stupnja podfrekventnog rasterećenja (49,0 / 48,8 / 48,6 / 48,4 Hz, po 8–10 % tereta). Isprobajte: postavite ispad na <b>348 MW — hrvatski udio NE Krško</b> — i gledajte kako se aktivira prvi stupanj rasterećenja; zatim smanjite inerciju H (više pretvaračkih izvora, manje rotirajućih masa) i promatrajte strmiji RoCoF i dublji nadir. U stvarnosti je Hrvatska sinkrono povezana s kontinentalnom Europom, pa isti ispad "guši" zajednička inercija sustava od preko 400 GW — zato je otočni pogon toliko zahtjevniji.</p>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="wrap f-in">
+    <div>
+      <span class="mono" style="font-weight:600">HR·EES — interaktivni vodič</span><br>
+      Edukativni prikaz hrvatskog elektroenergetskog sustava. Podaci ≈ 2024./2025., zaokruženi.
+    </div>
+    <div class="mono">400 kV ■ 220 kV ■ 110 kV<br>f₀ = 50 Hz · sinkrono područje kontinentalne Europe</div>
+  </div>
+</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>

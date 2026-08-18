@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karta hrvatskog EES-a — HR·EES</title>
+<meta name="description" content="Interaktivna shematska karta hrvatskog elektroenergetskog sustava: elektrane, 400 kV mreža i interkonekcije, sa zoomom i slojevima.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="tool-page">
+<div class="backbar">
+  <div class="wrap">
+    <a class="logo" href="index.html"><span class="sq" style="width:11px;height:11px;background:var(--kv400);display:inline-block;margin-right:9px"></span>HR·EES</a>
+    <a href="index.html#alati">← Svi alati</a>
+    <a href="index.html" style="margin-left:auto">Vodič kroz sustav</a>
+  </div>
+</div>
+<!-- ============ 02 · KARTA ============ -->
+<section id="karta" style="--acc:var(--kv110)">
+  <div class="wrap">
+    <div class="eyebrow">Alat 01 · Karta mreže</div>
+    <h2>Stvarne elektrane i okosnica mreže</h2>
+    <p class="lead">Shematski prikaz najvažnijih proizvodnih objekata i <strong>400 kV prijenosne mreže</strong> kojom upravlja HOPS. Hrvatska je sinkrono spojena s kontinentalnom Europom preko sedam 400 kV interkonekcija — struja slobodno teče prema Sloveniji, Mađarskoj, BiH i Srbiji. Filtrirajte po tipu i kliknite na objekt za detalje.</p>
+
+    <div class="chips" id="mapChips"></div>
+
+    <div class="map-grid">
+      <div class="card map-box">
+        <svg id="mapSvg" viewBox="0 0 850 720" role="img" aria-label="Shematska karta hrvatskog elektroenergetskog sustava"></svg>
+        <div class="tip" id="mapTip"></div>
+        <p class="foot-note">Pojednostavljeni shematski prikaz — položaji objekata i trase vodova su približni. Prikazani su odabrani 220 kV vodovi radi preglednosti.</p>
+      </div>
+      <div class="map-side">
+        <div class="card map-detail" id="mapDetail">
+          <span class="tag"><i></i>Hrvatski EES</span>
+          <h3>Odaberite objekt na karti</h3>
+          <p>Klikom na elektranu ili trafostanicu ovdje se prikazuju snaga, tehnologija i uloga objekta u sustavu.</p>
+        </div>
+        <div class="card map-stats">
+          <h4>Sustav u brojkama (≈ 2025.)</h4>
+          <ul>
+            <li>Priključna snaga svih elektrana <b>7 204 MW</b></li>
+            <li>Vršno opterećenje <b>≈ 3,2 GW</b></li>
+            <li>Godišnja potrošnja <b>≈ 18 TWh</b></li>
+            <li>Neto uvoz energije <b>≈ 20–30 %</b></li>
+            <li>400 kV vodovi <b>≈ 1 250 km</b></li>
+            <li>220 kV vodovi <b>≈ 1 200 km</b></li>
+            <li>110 kV vodovi <b>≈ 5 000 km</b></li>
+            <li>Distribucijska mreža <b>&gt; 140 000 km</b></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="wrap f-in">
+    <div>
+      <span class="mono" style="font-weight:600">HR·EES — interaktivni vodič</span><br>
+      Edukativni prikaz hrvatskog elektroenergetskog sustava. Podaci ≈ 2024./2025., zaokruženi.
+    </div>
+    <div class="mono">400 kV ■ 220 kV ■ 110 kV<br>f₀ = 50 Hz · sinkrono područje kontinentalne Europe</div>
+  </div>
+</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>

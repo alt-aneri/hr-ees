@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Krivulje opterećenja — HR·EES</title>
+<meta name="description" content="Dnevne krivulje opterećenja hrvatskog EES-a po sezonama, s utjecajem sunca i vjetra na rezidualno opterećenje.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="tool-page">
+<div class="backbar">
+  <div class="wrap">
+    <a class="logo" href="index.html"><span class="sq" style="width:11px;height:11px;background:var(--kv400);display:inline-block;margin-right:9px"></span>HR·EES</a>
+    <a href="index.html#alati">← Svi alati</a>
+    <a href="index.html" style="margin-left:auto">Vodič kroz sustav</a>
+  </div>
+</div>
+<!-- ============ 03 · OPTEREĆENJE ============ -->
+<section id="opterecenje" style="--acc:var(--kv220)">
+  <div class="wrap">
+    <div class="eyebrow">Alat 02 · Krivulje opterećenja</div>
+    <h2>Ravnoteža u 50 herca: potrošnja diktira ritam</h2>
+    <p class="lead">Potrošnja diše u dnevnom ritmu: jutarnji porast, radni plato i večernji vrh. Dispečeri unaprijed planiraju vozni red elektrana da krivulju prate iz sekunde u sekundu — jer svaka neravnoteža odmah pomiče frekvenciju s <strong>50 Hz</strong>. Dodajte sunce i vjetar pa promatrajte kako nastaje <strong>rezidualno opterećenje</strong> — ono što preostaje upravljivim elektranama.</p>
+
+    <div class="ctrl-row">
+      <div class="ctrl">
+        <label>Sezona</label>
+        <div class="seg" id="segSeason">
+          <button class="on" data-v="zima">Zima</button>
+          <button data-v="ljeto">Ljeto</button>
+        </div>
+      </div>
+      <div class="ctrl">
+        <label>Dan</label>
+        <div class="seg" id="segDay">
+          <button class="on" data-v="radni">Radni dan</button>
+          <button data-v="vikend">Vikend</button>
+        </div>
+      </div>
+      <div class="ctrl">
+        <label>Sunce · <b id="pvVal">600</b> MW instalirano</label>
+        <input type="range" id="pvR" min="0" max="2000" step="50" value="600">
+      </div>
+      <div class="ctrl">
+        <label>Vjetar · <b id="wVal">400</b> MW trenutno</label>
+        <input type="range" id="wR" min="0" max="1160" step="20" value="400">
+      </div>
+    </div>
+
+    <div class="card chart-card">
+      <svg id="loadChart" viewBox="0 0 780 360"></svg>
+      <div class="legend">
+        <span><i style="background:var(--ink)"></i>Opterećenje sustava</span>
+        <span><i style="background:var(--c-sunce)"></i>Sunce</span>
+        <span><i style="background:var(--c-vjetar)"></i>Vjetar</span>
+        <span><i style="background:var(--kv400);height:0;border-top:3px dashed var(--kv400)"></i>Rezidualno opterećenje</span>
+      </div>
+    </div>
+
+    <div class="stat-row" id="loadStats"></div>
+
+    <div class="note-grid">
+      <div class="card note">
+        <h4><span>f</span>Zašto baš 50 Hz?</h4>
+        <p>Svi generatori u Europi rotiraju sinkrono. Višak proizvodnje ubrzava rotore i diže frekvenciju; manjak ih usporava. Frekvencija je zato trenutni "krvni tlak" sustava — normalno se drži unutar ±50 mHz.</p>
+      </div>
+      <div class="card note">
+        <h4><span>Δ</span>Rezidualno opterećenje</h4>
+        <p>Opterećenje minus proizvodnja vjetra i sunca. Što je više solara, to podnevna "dolina" postaje dublja, a večernja rampa strmija — poznata "pačja krivulja". Upravo tu ulaze akumulacijske hidroelektrane, plinske jedinice i baterije.</p>
+      </div>
+      <div class="card note">
+        <h4><span>kW</span>Vrh je skup</h4>
+        <p>Mreža i elektrane dimenzioniraju se prema vršnom satu u godini, a ne prema prosjeku. Pomicanje potrošnje izvan vrha (upravljanje potrošnjom, dvotarifna brojila, punjenje EV noću) štedi cijelu infrastrukturu.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="wrap f-in">
+    <div>
+      <span class="mono" style="font-weight:600">HR·EES — interaktivni vodič</span><br>
+      Edukativni prikaz hrvatskog elektroenergetskog sustava. Podaci ≈ 2024./2025., zaokruženi.
+    </div>
+    <div class="mono">400 kV ■ 220 kV ■ 110 kV<br>f₀ = 50 Hz · sinkrono područje kontinentalne Europe</div>
+  </div>
+</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>
