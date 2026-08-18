@@ -14,23 +14,68 @@ const svgEl = (tag, attrs, parent) => {
 };
 const fmt = (n, d) => n.toLocaleString('hr-HR', { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 });
 
-/* ---------- traka stanja sustava (ilustrativno) ---------- */
+/* ---------- traka stanja sustava ----------
+   Opterećenje i razmjena dolaze s ENTSO-E-a preko generiranog podaci.json
+   (v. repo hr-ees-podaci). Ako dohvat ne uspije — nema mreže, Action nije
+   prošao, repo nedostupan — traka ostaje na ilustrativnom prikazu kakav je
+   i bio. Stranica mora raditi bez mreže, zato je živi dio nadogradnja, a
+   ne uvjet.
+
+   FREKVENCIJA OSTAJE ILUSTRATIVNA. ENTSO-E Transparency Platforma ne
+   objavljuje frekvenciju sustava, pa je nemamo odakle povući. Zato je
+   označena s "≈" i nota ispod trake uvijek kaže što je mjereno, a što nije
+   — inače bi stvarni podaci uz izmišljenu frekvenciju čitatelju sugerirali
+   da je i ona mjerena.                                                  */
+const IZVOR_PODATAKA =
+  'https://raw.githubusercontent.com/alt-aneri/hr-ees-podaci/main/podaci.json';
+
 (function ticker() {
   const fEl = $('#tkF'), pEl = $('#tkP'), xEl = $('#tkX'), tEl = $('#tkT');
+  const notaEl = $('#tkNota');
   if (!fEl) return;
   const base = [1950,1850,1780,1750,1770,1900,2150,2500,2700,2780,2820,2830,2790,2740,2700,2760,2900,3080,3150,3060,2900,2650,2350,2080];
+  let zivo = null;
+
+  const razmjenaTekst = mw =>
+    mw === 0 ? 'uravnoteženo'
+      : (mw > 0 ? 'uvoz ' : 'izvoz ') + fmt(Math.abs(mw)) + ' MW';
+
   function tick() {
     const now = new Date();
-    const f = 50 + (Math.random() - 0.5) * 0.06;
-    const p = base[now.getHours()] * (0.97 + Math.random() * 0.06);
-    const x = Math.round(p * 0.22 / 10) * 10;
-    fEl.textContent = fmt(f, 2);
-    pEl.textContent = fmt(Math.round(p / 10) * 10);
-    xEl.textContent = 'uvoz ' + fmt(x) + ' MW';
-    tEl.textContent = now.toLocaleTimeString('hr-HR', { hour: '2-digit', minute: '2-digit' });
+    // frekvencija je uvijek simulirana — v. komentar iznad
+    fEl.textContent = fmt(50 + (Math.random() - 0.5) * 0.06, 2);
+
+    if (zivo && zivo.opterecenje_mw != null) {
+      pEl.textContent = fmt(zivo.opterecenje_mw);
+      xEl.textContent = zivo.neto_razmjena_mw != null
+        ? razmjenaTekst(zivo.neto_razmjena_mw) : '—';
+      const t = new Date(zivo.opterecenje_vrijeme || zivo.osvjezeno);
+      tEl.textContent = t.toLocaleTimeString('hr-HR', { hour: '2-digit', minute: '2-digit' });
+    } else {
+      const p = base[now.getHours()] * (0.97 + Math.random() * 0.06);
+      pEl.textContent = fmt(Math.round(p / 10) * 10);
+      xEl.textContent = razmjenaTekst(Math.round(p * 0.22 / 10) * 10);
+      tEl.textContent = now.toLocaleTimeString('hr-HR', { hour: '2-digit', minute: '2-digit' });
+    }
   }
+
   tick();
   setInterval(tick, 2500);
+
+  fetch(IZVOR_PODATAKA, { cache: 'no-cache' })
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(d => {
+      if (!d || d.opterecenje_mw == null) return;
+      zivo = d;
+      if (notaEl) {
+        notaEl.textContent = 'P i razmjena: ENTSO-E, ' +
+          new Date(d.osvjezeno).toLocaleString('hr-HR',
+            { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) +
+          ' · frekvencija je ilustrativna';
+      }
+      tick();
+    })
+    .catch(() => { /* ostaje ilustrativni prikaz */ });
 })();
 
 /* ============================================================
