@@ -95,7 +95,7 @@ const CHAIN = [
     d: 'U velikim trafostanicama energija silazi s prijenosnih na distribucijske napone (35, 20 i 10 kV). Tu su i rasklopna postrojenja, "križanja" u kojima dispečeri sklopkama preusmjeravaju tokove, izoliraju kvarove i održavaju pogonsku spremnost mreže.',
     facts: [['110/35/20/10 kV', 'tipične transformacije'], ['> 24 000', 'trafostanica u distribuciji'], ['SCADA', 'daljinsko vođenje']] },
   { id: 'dis', ic: '0,4 kV', c: 'var(--kv220)', t: 'Distribucijska mreža · HEP ODS', s: 'Kapilare do svakog kućanstva',
-    d: 'HEP Operator distribucijskog sustava vodi mrežu srednjeg i niskog napona: preko 140 000 km vodova do 2,5 milijuna kupaca. Posljednji transformator spušta napon na 0,4 kV (400/230 V). Distribucija se ubrzano mijenja: kupci s krovnim solarima postaju proizvođači-potrošači, a tokovi snage sve češće teku "uzbrdo".',
+    d: 'HEP Operator distribucijskog sustava vodi mrežu srednjeg i niskog napona: preko 140 000 km vodova do 2,5 milijuna kupaca. Posljednji transformator spušta napon na 0,4 kV (400/230 V). Distribucija se ubrzano mijenja: kupci s krovnim sunčanim elektranama postaju proizvođači-potrošači, a tokovi snage sve češće teku "uzbrdo".',
     facts: [['> 140 000 km', 'vodova'], ['≈ 2,5 mil.', 'obračunskih mjernih mjesta'], ['0,4 kV', 'napon u utičnici (230 V fazno)']] },
   { id: 'con', ic: 'P', c: 'var(--ink)', t: 'Potrošači', s: 'Kućanstva, industrija, promet',
     d: 'Krajnja karika koja sve pokreće: potrošnja se ne naručuje, nego predviđa. Sustav u svakom trenutku proizvodi točno onoliko koliko se troši. Potrošači postaju aktivni: upravljanje potrošnjom, kućne baterije i punjenje električnih vozila izvan vršnih sati pretvaraju potrošnju iz zadanog uvjeta u alat optimizacije.',
@@ -107,7 +107,7 @@ const CHAIN = [
    ispod lanca. */
 const STORAGE = {
   ic: 'BESS', c: 'var(--amber)', t: 'Pohrana energije', s: 'Priključuje se na svim razinama mreže',
-  d: 'Pohrana ne stoji na jednom mjestu u lancu: priključuje se na razini prijenosa (velike baterije i RHE Velebit), na distribuciji (spremnici uz sunčane elektrane) i sve češće iza brojila, u kućanstvima uz krovni solar. Zajedničko im je da razdvajaju trenutak proizvodnje od trenutka potrošnje.',
+  d: 'Pohrana ne stoji na jednom mjestu u lancu: priključuje se na razini prijenosa (velike baterije i RHE Velebit), na distribuciji (spremnici uz sunčane elektrane) i sve češće iza brojila, u kućanstvima uz krovne sunčane elektrane. Zajedničko im je da razdvajaju trenutak proizvodnje od trenutka potrošnje.',
   // Broj najavljenih baterijskih projekata je namjerno izostavljen: registri se
   // razlikuju, dio projekata je na distribuciji, a broj se mijenja prebrzo da bi
   // stajao u ugrađenoj konstanti.
@@ -563,7 +563,7 @@ const TECH = [
     hr: 'U Hrvatskoj: dravska kaskada Varaždin–Čakovec–Dubrava, HE Đale, mirna bazna proizvodnja sjevera.' },
   { n: 'Reverzibilne HE (pumpna pohrana)', c: 'var(--c-hidro)', role: 'Pohrana', co2: 'ovisno o punjenju', eff: 'ciklus ≈ 75 %',
     how: 'Dva jezera na različitim visinama: u višku energije pumpa vodu gore, u manjku je pušta kroz turbinu dolje.',
-    p: ['Najveća dokazana tehnologija pohrane na svijetu', 'Pruža rezervu, regulaciju i pokretanje sustava iz beznaponskog stanja', 'Pretvara jeftine viškove (solar u podne) u skupe vrhove'],
+    p: ['Najveća dokazana tehnologija pohrane na svijetu', 'Pruža rezervu, regulaciju i pokretanje sustava iz beznaponskog stanja', 'Pretvara jeftine viškove (sunce u podne) u skupe vrhove'],
     m: ['Gubitak ≈ 25 % energije po ciklusu', 'Vrlo malo pogodnih lokacija', 'Velika investicija i dugogradnja'],
     hr: 'U Hrvatskoj: RHE Velebit kod Obrovca (270 MW turbinski / 240 MW pumpni), u pogonu od 1984. Pumpni rad je neko vrijeme bio ograničen; danas radi kao dnevna pohrana i pružatelj rezerve.' },
   { n: 'Plinske termoelektrane (kombi/kogeneracija)', c: 'var(--c-termo)', role: 'Fleksibilna / vršna', co2: '≈ 350–450 g/kWh', eff: 'η do 60 % (el.)',
@@ -583,7 +583,7 @@ const TECH = [
     hr: 'U Hrvatskoj: 50 % NE Krško (≈ 348 MW hrvatskog udjela) pokriva ~15 % potrošnje; pogon produljen do 2043.' },
   { n: 'Vjetroelektrane', c: 'var(--c-vjetar)', role: 'Varijabilna OIE', co2: '≈ 10 g/kWh', eff: 'faktor iskorištenja ≈ 25–35 %',
     how: 'Kinetička energija vjetra okreće rotor; pretvarači predaju energiju mreži. Snaga raste s trećom potencijom brzine vjetra.',
-    p: ['Bez goriva i emisija u pogonu', 'Brza gradnja i konkurentan trošak energije', 'U RH često proizvodi zimi i noću, dopunjuje solar'],
+    p: ['Bez goriva i emisija u pogonu', 'Brza gradnja i konkurentan trošak energije', 'U RH često proizvodi zimi i noću, dopunjuje sunce'],
     m: ['Varijabilnost: treba rezervu i prognozu', 'Bura donosi nagle rampe snage (i prisilna zaustavljanja)', 'Prostorni i krajobrazni utjecaj, ptice'],
     hr: 'U Hrvatskoj: 29 vjetroelektrana, ukupno ≈ 1 157 MW priključne snage (prema izvješću HOPS-a za 2025. godinu): VE Senj, Krš-Pađene, Korlat i druge, pretežno na dalmatinskom i ličkom krševitom zaleđu.' },
   { n: 'Sunčane elektrane', c: 'var(--c-sunce)', role: 'Varijabilna OIE', co2: '≈ 30 g/kWh', eff: 'faktor iskorištenja ≈ 12–17 %',
@@ -603,9 +603,9 @@ const TECH = [
     hr: 'U Hrvatskoj: prva geotermalna elektrana izgrađena je kod Bjelovara, GTE Velika Ciglena (≈ 10 MW), u pogonu od 2019. Više polja je u istraživanju.' },
   { n: 'Baterijski sustavi pohrane (BESS)', c: 'var(--amber)', role: 'Pohrana', co2: 'ovisno o punjenju', eff: 'ciklus ≈ 85–92 %',
     how: 'Litij-ionske baterije s pretvaračima; pune se u viškovima, prazne u vrhovima ili trenutno reagiraju na frekvenciju.',
-    p: ['Odziv u milisekundama, idealno za regulaciju frekvencije', 'Modularno i brzo za izgradnju, bilo gdje u mreži', 'Uz solar: pomiče podnevni višak u večernji vrh'],
+    p: ['Odziv u milisekundama, idealno za regulaciju frekvencije', 'Modularno i brzo za izgradnju, bilo gdje u mreži', 'Uz sunce: pomiče podnevni višak u večernji vrh'],
     m: ['Tipično 1–4 sata kapaciteta, ne rješava sezonu', 'Degradacija ćelija kroz cikluse', 'Ovisnost o kritičnim sirovinama (litij, kobalt)'],
-    hr: 'U Hrvatskoj: prvi veliki mrežni BESS projekti u izgradnji; očekuje se ključna uloga uz nagli rast solara.' }
+    hr: 'U Hrvatskoj: prvi veliki mrežni BESS projekti u izgradnji; očekuje se ključna uloga uz nagli rast sunčanih elektrana.' }
 ];
 
 (function buildTech() {
@@ -1045,7 +1045,7 @@ const TECH = [
           'Manjak pokriva masovan uvoz po 180 €/MWh, cijenu diktira regija, ne Hrvatska.',
           'Emisije se ne vide u domaćoj statistici, ali se "uvoze" kroz regionalni miks.',
           'Upravo ovakve zime dižu godišnju uvoznu ovisnost prema 30 %.'] },
-    { n: '2 · Solarno podne 2030. (3,5 GW sunca)', short: 'Solarno podne', when: 'Vedar proljetni dan, niska potrošnja, solar na maksimumu.',
+    { n: '2 · Sunčano podne 2030. (3,5 GW sunca)', short: 'Solarno podne', when: 'Vedar proljetni dan, niska potrošnja, sunce na maksimumu.',
       p: { dem: 2400, hyd: 'prosjek', windMW: 540, sunMW: 2975, imp: 20 },
       c: ['Proizvodnja bez goriva premašuje cijelu potrošnju — cijena pada na nulu (u praksi i u minus).',
           'RHE i baterije pune se do vrha, višak se izvozi dok interkonekcije ne "napune".',
@@ -1067,9 +1067,9 @@ const TECH = [
       p: { dem: 3400, hyd: 'prosjek', windMW: 1125, sunMW: 0, imp: 130 },
       c: ['Solar od 3,5 GW navečer daje nulu — vrh nose vjetar, hidro i uvoz.',
           'Večernja rampa postaje strmija nego danas ("pačja krivulja" u punom obliku).',
-          'Cijenu postavlja uvoz od 130 €/MWh, elektrificirana potrošnja plaća tuđi vršni trošak.',
+          'Cijenu postavlja uvoz od 130 €/MWh. Grijanje i promet koji su prešli na struju dižu potrošnju baš u satu kad je najskuplja.',
           'Bez pohrane, dodatni paneli ovom satu ne pomažu ništa.'] },
-    { n: '6 · Elektrifikacija + 1 GW pohrane', short: 'Elektrif. + pohrana', when: 'Isti večernji vrh kao u scenariju 5, ali s 1 GW baterija punjenih podnevnim solarom.',
+    { n: '6 · Elektrifikacija + 1 GW pohrane', short: 'Elektrif. + pohrana', when: 'Isti večernji vrh kao u scenariju 5, ali s 1 GW baterija punjenih podnevnim suncem.',
       p: { dem: 3400, hyd: 'prosjek', windMW: 1125, sunMW: 0, imp: 130, bess: 1000 },
       c: ['Baterije istiskuju uvoz iz voznog reda: podnevni solar isporučen navečer.',
           'Marginalna cijena pada sa 130 na 85 €/MWh, pohrana "izravnava" dan.',
