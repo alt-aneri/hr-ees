@@ -176,7 +176,9 @@ nav a{
 nav a:hover{color:var(--ink);background:var(--hover-bg)}
 
 /* ---------- hero ---------- */
-.hero{padding:76px 0 30px}
+/* Bočni razmak mora se ponoviti: .hero dolazi poslije .wrap, pa bi
+   kratica s nulom ugasila .wrap-ov padding i tekst bi legao na rub. */
+.hero{padding:76px 24px 30px}
 .hero h1{
   font-family:'Archivo',sans-serif;font-weight:800;
   font-size:clamp(2.5rem,6.4vw,4.7rem);
@@ -464,7 +466,7 @@ a.tool-card:hover .go{transform:translateX(5px)}
 .map-detail h3{text-wrap:balance}
 footer .f-in{align-items:flex-start}
 @media (max-width:640px){
-  .hero{padding:52px 0 22px}
+  .hero{padding:52px 24px 22px}
   .ticker{gap:18px}
   section{padding:64px 0 56px}
   input[type=range]{width:100%}
