@@ -182,18 +182,31 @@ def main():
     print("proizvodnja po izvorima…")
     prod_xml = upit(documentType="A75", processType="A16", in_Domain=HR,
                     periodStart=sat(od), periodEnd=sat(do))
-    proizvodnja = {}
+
+    # Svi izvori se čitaju u ISTOM satu, ne "zadnji dostupni po izvoru".
+    # ENTSO-E ne objavljuje sve tipove istovremeno, pa bi uzimanje zadnje
+    # točke po tipu složilo brojke iz različitih sati: zbroj tada ne znači
+    # ništa i ne može se usporediti s opterećenjem. Referentni sat je onaj
+    # za koji imamo opterećenje; tipovi koji za taj sat nemaju vrijednost
+    # ispadaju, jer je bolje da izvora nema nego da nosi krivi sat.
+    po_satu = {}
     if prod_xml is not None:
         for ts in djeca(prod_xml, "TimeSeries"):
             vrsta = djeca(ts, "psrType")
             if not vrsta:
                 continue
-            niz = tocke(ts, "quantity")
-            v = zadnja(niz)
-            if v is not None:
+            for t, v in tocke(ts, "quantity"):
                 # isti psrType zna doći u više TimeSeries (npr. i potrošnja
                 # agregata) — zbrajamo umjesto da se međusobno gaze
-                proizvodnja[vrsta[0].text] = proizvodnja.get(vrsta[0].text, 0) + v
+                po_satu.setdefault(t, {})
+                po_satu[t][vrsta[0].text] = po_satu[t].get(vrsta[0].text, 0) + v
+
+    ref = opt[-1][0] if opt else None
+    if ref not in po_satu:
+        # nema proizvodnje za sat opterećenja — uzmi zadnji sat koji ima
+        # najviše prijavljenih izvora, pa barem unutar sebe bude dosljedno
+        ref = max(po_satu, key=lambda t: (len(po_satu[t]), t)) if po_satu else None
+    proizvodnja = po_satu.get(ref, {})
 
     print("cijena dan-unaprijed…")
     cijene = tocke(
@@ -226,6 +239,10 @@ def main():
         "opterecenje_mw": round(zadnja(opt)) if zadnja(opt) is not None else None,
         "opterecenje_vrijeme": opt[-1][0].isoformat() if opt else None,
         "cijena_eur_mwh": round(cijena_sad, 2) if cijena_sad is not None else None,
+        # isti sat kao opterećenje kad god je moguće — bez toga se zbroj ne
+        # smije uspoređivati s opterećenjem ni razmjenom
+        "proizvodnja_vrijeme": ref.isoformat() if ref else None,
+        "proizvodnja_ukupno_mw": round(sum(proizvodnja.values())) if proizvodnja else None,
         "proizvodnja_mw": {
             IZVORI.get(k, k): round(v)
             for k, v in sorted(proizvodnja.items(), key=lambda p: -p[1])
