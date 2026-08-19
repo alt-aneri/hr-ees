@@ -469,6 +469,14 @@ footer .f-in{align-items:flex-start}
   section{padding:64px 0 56px}
   input[type=range]{width:100%}
   .ctrl{flex:1 1 160px}
+  /* Naslov + značka uloge + "+" ne stanu u jedan red na telefonu, a značka
+     je nowrap pa je gurala izvan zaslona. Prelama se ispod naslova; "+"
+     ostaje u prvom redu jer je to ono što se pritišće. */
+  .tech-head{flex-wrap:wrap}
+  .tech-head h3{flex:1 1 100%;order:1}
+  .tech-head .sw{order:0}
+  .tech-head .pm{order:0;margin-left:auto}
+  .tech-head .role{order:2}
 }
 
 /* trokut snaga (jalova energija) */
