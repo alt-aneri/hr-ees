@@ -201,12 +201,19 @@ def main():
                 po_satu.setdefault(t, {})
                 po_satu[t][vrsta[0].text] = po_satu[t].get(vrsta[0].text, 0) + v
 
-    ref = opt[-1][0] if opt else None
-    if ref not in po_satu:
-        # nema proizvodnje za sat opterećenja — uzmi zadnji sat koji ima
-        # najviše prijavljenih izvora, pa barem unutar sebe bude dosljedno
-        ref = max(po_satu, key=lambda t: (len(po_satu[t]), t)) if po_satu else None
+    # Referentni trenutak je onaj s NAJVIŠE prijavljenih izvora, a ne zadnji
+    # dostupni. Opterećenje stiže u 15-minutnoj rezoluciji, a većina izvora
+    # satno: vezanjem na zadnje opterećenje dobio bi se trenutak u kojem
+    # javljaju samo brzi izvori (sunce, protok), pa bi zbroj bio dosljedan
+    # ali besmisleno nepotpun. Kod izjednačenja pobjeđuje kasniji trenutak.
+    ref = max(po_satu, key=lambda t: (len(po_satu[t]), t)) if po_satu else None
     proizvodnja = po_satu.get(ref, {})
+
+    # Opterećenje se čita u ISTOM trenutku, da se brojke smiju zbrajati.
+    # Ako za taj trenutak nema mjerenja, uzima se zadnje prije njega.
+    if ref and opt:
+        prije = [(t, v) for t, v in opt if t <= ref]
+        opt = prije or opt
 
     print("cijena dan-unaprijed…")
     cijene = tocke(
