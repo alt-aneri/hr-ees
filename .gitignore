@@ -1,5 +1,10 @@
 .DS_Store
 
+# Radne bilješke — ostaju lokalno, repo je javan.
+# UPUTE.md sadrži plan serije članaka, CLAUDE.md interne konvencije.
+CLAUDE.md
+UPUTE.md
+
 # lokalne Claude Code postavke (dozvole su po stroju, launch.json ide u repo)
 .claude/settings.local.json
 
