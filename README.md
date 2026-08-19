@@ -38,7 +38,9 @@ i MINGO registar OIE. Granični troškovi u simulatorima su ilustrativni i
 označeni kao takvi u samom alatu.
 
 Traka stanja na naslovnici čita `podaci.json` koji svakih sat vremena osvježava
-GitHub Action iz ENTSO-E Transparency Platforme. Ako dohvat ne uspije, traka
+GitHub Action (`dohvati.py`) iz ENTSO-E Transparency Platforme. Podaci se
+objavljuju na granu [`podaci`](../../tree/podaci), da satno osvježavanje ne
+zatrpava povijest koda. Ako dohvat ne uspije, traka
 pada na ilustrativni prikaz — stranica radi i bez mreže.
 
 Frekvencija u toj traci **nije mjerena** i tako je označena: ENTSO-E

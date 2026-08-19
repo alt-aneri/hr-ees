@@ -16,7 +16,7 @@ const fmt = (n, d) => n.toLocaleString('hr-HR', { minimumFractionDigits: d || 0,
 
 /* ---------- traka stanja sustava ----------
    Opterećenje i razmjena dolaze s ENTSO-E-a preko generiranog podaci.json
-   (v. repo hr-ees-podaci). Ako dohvat ne uspije — nema mreže, Action nije
+   (grana "podaci" ovog repoa). Ako dohvat ne uspije — nema mreže, Action nije
    prošao, repo nedostupan — traka ostaje na ilustrativnom prikazu kakav je
    i bio. Stranica mora raditi bez mreže, zato je živi dio nadogradnja, a
    ne uvjet.
@@ -27,7 +27,7 @@ const fmt = (n, d) => n.toLocaleString('hr-HR', { minimumFractionDigits: d || 0,
    — inače bi stvarni podaci uz izmišljenu frekvenciju čitatelju sugerirali
    da je i ona mjerena.                                                  */
 const IZVOR_PODATAKA =
-  'https://raw.githubusercontent.com/alt-aneri/hr-ees-podaci/main/podaci.json';
+  'https://raw.githubusercontent.com/alt-aneri/hr-ees/podaci/podaci.json';
 
 (function ticker() {
   const fEl = $('#tkF'), pEl = $('#tkP'), xEl = $('#tkX'), tEl = $('#tkT');

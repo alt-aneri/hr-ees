@@ -12,3 +12,6 @@ UPUTE.md
 # Ne brišem ih automatski jer su git repoi; kad ih maknemo ručno, ovo ispada.
 /ees/
 /hr-ees/
+
+# generira ga Action, objavljuje se na granu "podaci", ne na main
+podaci.json

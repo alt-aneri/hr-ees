@@ -1,0 +1,72 @@
+name: Osvježi podatke
+
+# Svakih sat vremena. ENTSO-E objavljuje mjerenja s odmakom, pa češće nema
+# smisla. Cron je u UTC-u; :20 umjesto :00 jer su okrugli sati na GitHubu
+# najopterećeniji i posao zna dugo čekati u redu.
+on:
+  schedule:
+    - cron: "20 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: podaci
+  cancel-in-progress: false
+
+jobs:
+  osvjezi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Dohvati s ENTSO-E
+        env:
+          ENTSOE_TOKEN: ${{ secrets.ENTSOE_TOKEN }}
+        run: python dohvati.py
+
+      # Podaci idu na granu "podaci", ne na main. Satno commitanje u main dalo
+      # bi tisuće podatkovnih commitova godišnje i zatrpalo povijest koda; usto
+      # bi svaki od njih pokretao ponovnu gradnju GitHub Pagesa bez potrebe.
+      #
+      # Grana se gradi plumbing naredbama, bez checkouta: sadrži točno jednu
+      # datoteku, pa je jeftinije složiti stablo ručno nego prebacivati radnu
+      # kopiju amo-tamo. Usporedba stabala ujedno služi kao provjera je li se
+      # išta promijenilo.
+      - name: Objavi na granu podaci
+        run: |
+          set -euo pipefail
+
+          if [ ! -f podaci.json ]; then
+            echo "Nema podaci.json (token vjerojatno nije postavljen) — preskačem."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          BLOB=$(git hash-object -w podaci.json)
+          TREE=$(printf '100644 blob %s\tpodaci.json\n' "$BLOB" | git mktree)
+
+          git fetch --quiet origin podaci 2>/dev/null || true
+          PARENT=$(git rev-parse -q --verify FETCH_HEAD || true)
+
+          if [ -n "$PARENT" ] && [ "$(git rev-parse "$PARENT^{tree}")" = "$TREE" ]; then
+            echo "Podaci nepromijenjeni — nema novog commita."
+            exit 0
+          fi
+
+          PORUKA="Podaci: $(date -u '+%Y-%m-%d %H:%M UTC')"
+          if [ -n "$PARENT" ]; then
+            COMMIT=$(git commit-tree "$TREE" -p "$PARENT" -m "$PORUKA")
+          else
+            COMMIT=$(git commit-tree "$TREE" -m "$PORUKA")
+          fi
+
+          git push origin "$COMMIT:refs/heads/podaci"
+          echo "Objavljeno: $COMMIT"
