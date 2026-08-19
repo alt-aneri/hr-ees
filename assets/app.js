@@ -862,6 +862,35 @@ const TECH = [
    sve ostalo se ignorira, pa slučajne poruke s drugih skripti na
    stranici ne mogu promijeniti izgled.
    ============================================================ */
+/* ============================================================
+   VISINA — javljanje roditeljskom okviru
+
+   Dok je alat živio na istoj domeni, roditelj je visinu čitao izravno iz
+   contentDocumenta. Sada je na drugoj domeni (GitHub Pages), pa mu je taj
+   pristup zabranjen i visinu mora dobiti od nas. Bez ovoga bi iframe ostao
+   na fiksnoj visini iz CSS-a: ili odrezan ili s praznim prostorom ispod.
+
+   Šalje se samo u embed načinu — samostalno otvorena stranica nema kome.
+   ============================================================ */
+(function javiVisinu() {
+  if (!/[?&]embed=1/.test(location.search) || parent === window) return;
+  let zadnja = 0;
+  const javi = () => {
+    // body, ne documentElement: <html> se rasteže na visinu iframea, pa bi
+    // mjerio okvir umjesto sadržaja i visina se nikad ne bi smanjila
+    const h = Math.max(document.body.scrollHeight, document.body.offsetHeight);
+    if (h > 0 && h !== zadnja) {
+      zadnja = h;
+      parent.postMessage({ wnVisina: h }, '*');
+    }
+  };
+  addEventListener('load', javi);
+  addEventListener('resize', javi);
+  if (window.ResizeObserver) new ResizeObserver(javi).observe(document.body);
+  // alati prekrajaju sadržaj i nakon učitavanja (karta, grafovi, kartice)
+  setInterval(javi, 1000);
+})();
+
 (function themeSync() {
   const root = document.documentElement;
   const set = t => {
