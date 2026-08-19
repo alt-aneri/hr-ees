@@ -83,7 +83,7 @@ const IZVOR_PODATAKA =
    ============================================================ */
 const CHAIN = [
   { id: 'gen', ic: 'G', c: 'var(--kv400)', t: 'Elektrane', s: 'Pretvaraju primarnu energiju u električnu',
-    d: 'Hidroelektrane, termoelektrane, nuklearna elektrana (NE Krško, 50 % suvlasništvo), vjetroelektrane i sunčane elektrane. Generatori proizvode na 6–25 kV, a blok-transformatori odmah dižu napon za prijenos. Mješavina tehnologija (miks) određuje cijenu, emisije i fleksibilnost cijelog sustava. Priključna snaga svih elektrana u Hrvatskoj krajem 2025. bila je 7.204 MW, od toga je 5.661 MW priključeno na prijenosnu mrežu, odnosno 79 %, a ostalih 21 % je priključeno na distribucijsku mrežu.',
+    d: 'Hidroelektrane, termoelektrane, nuklearna elektrana (NE Krško, 50 % suvlasništvo), vjetroelektrane i sunčane elektrane. Generatori proizvode na 6–25 kV, a blok-transformatori odmah dižu napon za prijenos. Ta mješavina tehnologija, energetski miks, određuje cijenu, emisije i fleksibilnost cijelog sustava. Priključna snaga svih elektrana u Hrvatskoj krajem 2025. bila je 7.204 MW, od toga je 5.661 MW priključeno na prijenosnu mrežu, odnosno 79 %, a ostalih 21 % je priključeno na distribucijsku mrežu.',
     facts: [['7 204 MW', 'priključna snaga svih elektrana (kraj 2025.)'], ['79 %', 'na prijenosnoj mreži'], ['21 %', 'na distribucijskoj mreži']] },
   { id: 'ts1', ic: 'TS', c: 'var(--ink)', t: 'Blok-transformacija', s: 'Podizanje napona na 400/220/110 kV',
     d: 'Transformator diže napon da bi struja — a s njom i gubici (P = I²R) — bila što manja. Ista energija na 400 kV putuje s tisuću puta manjim gubicima nego na 10 kV. Zato velike elektrane "izlaze" izravno na najviše naponske razine.',
@@ -250,7 +250,7 @@ const PLANTS = [
   { n: 'CHE Fužine', hep: 1, t: 'hidro', mw: 4.5, ll: [14.71,45.3], d: 'Crpno-akumulacijska HE u Gorskom kotaru (1957.); s jezerom Bajer dio je lančanog sustava koji vodu koristi više puta.' },
   { n: 'HE Ozalj 1 i 2', hep: 1, t: 'hidro', mw: 3.54, ll: [15.47,45.61], d: 'Protočna HE na Kupi iz 1908., u secesijskoj zgradi, još uvijek u pogonu.' },
   // --- HEP-ovi solari ≥ 5 MW; koordinate su na razini naselja po kojem je elektrana imenovana ---
-  { n: 'SE Donja Dubrava', hep: 1, t: 'sunce', mw: 9.99, ll: [16.75,46.32], d: 'Sunčana elektrana uz HE Dubrava na Dravi (2023.) — solar se gradi na već priključenoj lokaciji, pa dijeli postojeći izvod.' },
+  { n: 'SE Donja Dubrava', hep: 1, t: 'sunce', mw: 9.99, ll: [16.75,46.32], d: 'Sunčana elektrana izgrađena 2023. uz HE Dubrava na Dravi. Priključena je u postojeću trafostanicu hidroelektrane, u vlastito polje: nova elektrana nije tražila novu trafostanicu.' },
   { n: 'SE Črnkovci', hep: 1, t: 'sunce', mw: 8.5, ll: [18.31,45.7], d: 'Sunčana elektrana u Slavoniji (2025.); primjer širenja HEP-ovog solara izvan priobalja, gdje je ozračenost manja ali je zemljište dostupnije.' },
   { n: 'SE Radosavci', hep: 1, t: 'sunce', mw: 9.99, st: 'soon', ll: [17.64,45.71], d: 'Sunčana elektrana u istočnoj Slavoniji, u izgradnji.' },
   { n: 'SE Cres', hep: 1, t: 'sunce', mw: 6.5, st: 'soon', ll: [14.42,44.896], d: 'Otočna sunčana elektrana u izgradnji; kao i SE Vis, smanjuje ovisnost otoka o podmorskom kabelu.' },
@@ -740,7 +740,7 @@ const TECH = [
     if (exp > 0) msgs.push('Jeftina proizvodnja premašuje potrošnju: <b>RHE pumpa ' + fmt(pump) + ' MW</b>, izvozi se ' + fmt(exp) + ' MW' + (curt > 0 ? ', a ' + fmt(curt) + ' MW se ograničava (curtailment)' : '') + '. Cijene padaju prema nuli ili u minus.');
     else if (pump > 0) msgs.push('Višak jeftine energije: RHE Velebit pumpa ' + fmt(pump) + ' MW u gornje jezero.');
     if (impU && impU.p > 0 && !shortage) msgs.push('Uvoz je u voznom redu <b>prije domaćih termoelektrana</b> dok god je jeftiniji od njih — pomaknite cijenu uvoza iznad ~96 €/MWh i gledajte kako se redoslijed mijenja.');
-    if (marg && (marg.n === 'Plinske TE' || marg.n === 'TE Plomin (ugljen)')) msgs.push('Cijenu postavlja fosilna jedinica, tipična situacija u večernjem vrhu. Više vjetra, sunca ili hidrologije istisnulo bi je iz voznog reda.');
+    if (marg && (marg.n === 'Plinske TE' || marg.n === 'TE Plomin (ugljen)')) msgs.push('Cijenu postavlja fosilna jedinica, tipična situacija u večernjem vrhu: u njezin granični trošak ulaze gorivo i emisije CO₂. Više vjetra, sunca ili hidrologije istisnulo bi je iz voznog reda.');
     if (co2 > 0) msgs.push('Emisije potječu od ' + (disp.filter(u => u.co2 > 0).map(u => u.n).join(', ')) + '. Pretpostavljeni faktori: ugljen 0,95, plin 0,37, uvoz 0,30 t CO₂/MWh.');
     $('#simMsgs').innerHTML = msgs.map(m => '<li>' + m + '</li>').join('');
   }
@@ -1049,7 +1049,7 @@ const TECH = [
       p: { dem: 2400, hyd: 'prosjek', windMW: 540, sunMW: 2975, imp: 20 },
       c: ['Proizvodnja bez goriva premašuje cijelu potrošnju — cijena pada na nulu (u praksi i u minus).',
           'RHE i baterije pune se do vrha, višak se izvozi dok interkonekcije ne "napune".',
-          'Ostatak se mora ograničiti (curtailment), besplatna energija se baca.',
+          'Ostatak se mora ograničiti (curtailment): elektrane dobiju nalog da smanje proizvodnju, pa se ne proizvodi energija koja nema tržišnu cijenu.',
           'Vrijednost pohrane i fleksibilne potrošnje raste brže od vrijednosti novih panela.'] },
     { n: '3 · Izlazak iz ugljena (Plomin ugašen)', short: 'Bez ugljena', when: 'Zimska večer nakon zatvaranja TE Plomin, bez sunca.',
       p: { dem: 2900, hyd: 'prosjek', windMW: 464, sunMW: 0, imp: 110, plomin: false },
@@ -1074,7 +1074,7 @@ const TECH = [
       c: ['Baterije istiskuju uvoz iz voznog reda: podnevni solar isporučen navečer.',
           'Marginalna cijena pada sa 130 na 85 €/MWh, pohrana "izravnava" dan.',
           'Uvoz u vršnom satu: nula. Sustav prolazi vrh domaćim resursima.',
-          'Usporedi sa scenarijem 5: ista potrošnja, isti vjetar, razlika je samo pohrana.'] }
+          'Usporedi sa scenarijem 5: ista potrošnja, isti vjetar. Jedina razlika je 1 GW baterija, koje podnevni višak sunca isporuče navečer.'] }
   ];
 
   const results = SCN.map(s => run(s.p));
