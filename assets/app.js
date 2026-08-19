@@ -108,7 +108,10 @@ const CHAIN = [
 const STORAGE = {
   ic: 'BESS', c: 'var(--amber)', t: 'Pohrana energije', s: 'Priključuje se na svim razinama mreže',
   d: 'Pohrana ne stoji na jednom mjestu u lancu — priključuje se na razini prijenosa (velike baterije i RHE Velebit), na distribuciji (spremnici uz sunčane elektrane) i sve češće iza brojila, u kućanstvima uz krovni solar. Zajedničko im je da razdvajaju trenutak proizvodnje od trenutka potrošnje.',
-  facts: [['270 / 240 MW', 'RHE Velebit turbina / pumpa'], ['49', 'najavljenih baterijskih projekata'], ['~ 75 %', 'iskoristivost pumpnog ciklusa']]
+  // Broj najavljenih baterijskih projekata je namjerno izostavljen: registri se
+  // razlikuju, dio projekata je na distribuciji, a broj se mijenja prebrzo da bi
+  // stajao u ugrađenoj konstanti.
+  facts: [['270 / 240 MW', 'RHE Velebit turbina / pumpa'], ['~ 75 %', 'iskoristivost pumpnog ciklusa']]
 };
 
 (function buildStorage() {
