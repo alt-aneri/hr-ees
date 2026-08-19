@@ -25,6 +25,31 @@ BAZA = "https://web-api.tp.entsoe.eu/api"
 HR = "10YHR-HEP------M"          # hrvatska regulacijska zona / tržišno područje
 TOKEN = os.environ.get("ENTSOE_TOKEN", "").strip()
 
+# ENTSO-E izvore označava šiframa (psrType). Prevode se ovdje, a ne pri
+# prikazu: podaci.json je javan i netko ga može čitati bez ovog repoa, pa nema
+# smisla da mora tražiti šifrarnik. Šifre koje se u hrvatskoj zoni ne pojavljuju
+# (offshore vjetar, nuklearna — Krško je slovensko) nisu navedene i prolaze kao
+# vlastita šifra.
+IZVORI = {
+    "B01": "biomasa",
+    "B02": "lignit",
+    "B03": "plin iz ugljena",
+    "B04": "plin",
+    "B05": "kameni ugljen",
+    "B06": "loživo ulje",
+    "B09": "geotermalna",
+    "B10": "reverzibilna HE",
+    "B11": "protočna HE",
+    "B12": "akumulacijska HE",
+    "B15": "ostali obnovljivi",
+    "B16": "sunce",
+    "B17": "otpad",
+    "B18": "vjetar (pučina)",
+    "B19": "vjetar (kopno)",
+    "B20": "ostalo",
+    "B25": "pohrana",
+}
+
 # Susjedi za prekogranične tokove. Ključ je oznaka koju prikazujemo.
 SUSJEDI = {
     "SI": "10YSI-ELES-----O",
@@ -201,7 +226,10 @@ def main():
         "opterecenje_mw": round(zadnja(opt)) if zadnja(opt) is not None else None,
         "opterecenje_vrijeme": opt[-1][0].isoformat() if opt else None,
         "cijena_eur_mwh": round(cijena_sad, 2) if cijena_sad is not None else None,
-        "proizvodnja_mw": {k: round(v) for k, v in sorted(proizvodnja.items())},
+        "proizvodnja_mw": {
+            IZVORI.get(k, k): round(v)
+            for k, v in sorted(proizvodnja.items(), key=lambda p: -p[1])
+        },
         "razmjena_mw": razmjena,
         "neto_razmjena_mw": sum(razmjena.values()) if razmjena else None,
     }
