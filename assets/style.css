@@ -477,6 +477,9 @@ footer .f-in{align-items:flex-start}
   .tech-head .sw{order:0}
   .tech-head .pm{order:0;margin-left:auto}
   .tech-head .role{order:2}
+  /* "400 / 220 / 110 kV" uz logo lomio se u četiri retka i razvlačio traku.
+     Ista legenda stoji u podnožju, pa se na telefonu ovdje izostavlja. */
+  .logo small{display:none}
 }
 
 /* trokut snaga (jalova energija) */
