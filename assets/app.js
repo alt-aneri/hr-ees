@@ -894,6 +894,39 @@ const TECH = [
   setInterval(javi, 1000);
 })();
 
+/* ============================================================
+   POVEZNICE U UGRAĐENOM NAČINU
+
+   Naslovnica alata linka na alat-*.html. Kad je ugrađena u iframe, klik na
+   karticu bi navigirao UNUTAR okvira: čitatelj gleda drugi alat, a adresa u
+   pregledniku i dalje pokazuje staru stranicu, pa se ne može podijeliti ni
+   vratiti natrag.
+
+   Zato roditelj može poslati ?nav=<baza>, a mi tada poveznice preusmjerimo
+   na njegove rute i otvorimo ih u vrhu (_top). Bez tog parametra ništa se ne
+   dira i alat radi samostalno kao i dosad.
+   ============================================================ */
+(function poveznice() {
+  const m = /[?&]nav=([^&]+)/.exec(location.search);
+  if (!m) return;
+  let baza;
+  try {
+    baza = new URL(decodeURIComponent(m[1]));
+  } catch (e) {
+    return;                       // neispravna baza: radije ne diraj ništa
+  }
+  // Prihvaća se samo http(s), da parametar ne može ubaciti javascript: URL
+  if (baza.protocol !== 'https:' && baza.protocol !== 'http:') return;
+
+  const put = baza.href.replace(/\/+$/, '');
+  document.querySelectorAll('a[href*="alat-"]').forEach(a => {
+    const slug = /alat-([a-z]+)\.html/.exec(a.getAttribute('href') || '');
+    if (!slug) return;
+    a.setAttribute('href', put + '/' + slug[1] + '/');
+    a.setAttribute('target', '_top');
+  });
+})();
+
 (function themeSync() {
   const root = document.documentElement;
   const set = t => {
