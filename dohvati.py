@@ -209,11 +209,12 @@ def main():
     ref = max(po_satu, key=lambda t: (len(po_satu[t]), t)) if po_satu else None
     proizvodnja = po_satu.get(ref, {})
 
-    # Opterećenje se čita u ISTOM trenutku, da se brojke smiju zbrajati.
-    # Ako za taj trenutak nema mjerenja, uzima se zadnje prije njega.
+    # Opterećenje u trenutku presjeka (za bilancu), odvojeno od najsvježijeg
+    # (za traku). Ako za taj trenutak nema mjerenja, uzima se zadnje prije njega.
+    opt_ref = None
     if ref and opt:
         prije = [(t, v) for t, v in opt if t <= ref]
-        opt = prije or opt
+        opt_ref = prije[-1][1] if prije else None
 
     print("cijena dan-unaprijed…")
     cijene = tocke(
@@ -227,17 +228,21 @@ def main():
     cijena_sad = next((v for t, v in cijene if t == sat_sada), None)
 
     print("prekogranični tokovi…")
-    razmjena = {}
+    # Kao i proizvodnja: uz najsvježiju vrijednost čuva se i ona u trenutku
+    # presjeka, jer se samo tako smije zbrajati s proizvodnjom i opterećenjem.
+    razmjena, razmjena_ref = {}, {}
+    u_trenutku = lambda niz, t: next((v for tt, v in reversed(niz) if tt <= t), None)
     for oznaka, eic in SUSJEDI.items():
-        izvoz = zadnja(tocke(
-            upit(documentType="A11", out_Domain=HR, in_Domain=eic,
-                 periodStart=sat(od), periodEnd=sat(do)), "quantity"))
-        uvoz = zadnja(tocke(
-            upit(documentType="A11", out_Domain=eic, in_Domain=HR,
-                 periodStart=sat(od), periodEnd=sat(do)), "quantity"))
-        if izvoz is not None or uvoz is not None:
+        iz = tocke(upit(documentType="A11", out_Domain=HR, in_Domain=eic,
+                        periodStart=sat(od), periodEnd=sat(do)), "quantity")
+        uv = tocke(upit(documentType="A11", out_Domain=eic, in_Domain=HR,
+                        periodStart=sat(od), periodEnd=sat(do)), "quantity")
+        if iz or uv:
             # pozitivno = neto uvoz u Hrvatsku
-            razmjena[oznaka] = round((uvoz or 0) - (izvoz or 0))
+            razmjena[oznaka] = round((zadnja(uv) or 0) - (zadnja(iz) or 0))
+            if ref:
+                razmjena_ref[oznaka] = round((u_trenutku(uv, ref) or 0)
+                                             - (u_trenutku(iz, ref) or 0))
 
     podaci = {
         "osvjezeno": sada.replace(microsecond=0).isoformat(),
@@ -246,16 +251,28 @@ def main():
         "opterecenje_mw": round(zadnja(opt)) if zadnja(opt) is not None else None,
         "opterecenje_vrijeme": opt[-1][0].isoformat() if opt else None,
         "cijena_eur_mwh": round(cijena_sad, 2) if cijena_sad is not None else None,
-        # isti sat kao opterećenje kad god je moguće — bez toga se zbroj ne
-        # smije uspoređivati s opterećenjem ni razmjenom
-        "proizvodnja_vrijeme": ref.isoformat() if ref else None,
-        "proizvodnja_ukupno_mw": round(sum(proizvodnja.values())) if proizvodnja else None,
-        "proizvodnja_mw": {
-            IZVORI.get(k, k): round(v)
-            for k, v in sorted(proizvodnja.items(), key=lambda p: -p[1])
-        },
         "razmjena_mw": razmjena,
         "neto_razmjena_mw": sum(razmjena.values()) if razmjena else None,
+
+        # Vrijednosti iznad su NAJSVJEŽIJE dostupne i svaka može biti iz
+        # drugog trenutka — dobre su za prikaz stanja, ali se ne smiju
+        # međusobno zbrajati.
+        #
+        # Presjek ispod je jedan trenutak: onaj u kojem je prijavljeno najviše
+        # izvora. Tu se proizvodnja, opterećenje i razmjena smiju usporediti.
+        # Cijena je potpune pokrivenosti to što kasni — obično nekoliko sati,
+        # jer spore serije objavljuju zadnje.
+        "presjek": {
+            "vrijeme": ref.isoformat() if ref else None,
+            "opterecenje_mw": round(opt_ref) if opt_ref is not None else None,
+            "proizvodnja_ukupno_mw": round(sum(proizvodnja.values())) if proizvodnja else None,
+            "proizvodnja_mw": {
+                IZVORI.get(k, k): round(v)
+                for k, v in sorted(proizvodnja.items(), key=lambda p: -p[1])
+            },
+            "razmjena_mw": razmjena_ref,
+            "neto_razmjena_mw": sum(razmjena_ref.values()) if razmjena_ref else None,
+        },
     }
 
     # Ako baš ništa nije stiglo, ne prepisuj zatečenu datoteku ispraznom —
