@@ -83,7 +83,7 @@ const IZVOR_PODATAKA =
    ============================================================ */
 const CHAIN = [
   { id: 'gen', ic: 'G', c: 'var(--kv400)', t: 'Elektrane', s: 'Pretvaraju primarnu energiju u električnu',
-    d: 'Hidroelektrane, termoelektrane, nuklearna elektrana (NE Krško, 50 % suvlasništvo), vjetroelektrane i sunčane elektrane. Generatori proizvode na 6–25 kV, a blok-transformatori odmah dižu napon za prijenos. Mješavina tehnologija — miks — određuje cijenu, emisije i fleksibilnost cijelog sustava. Priključna snaga svih elektrana u Hrvatskoj krajem 2025. bila je 7.204 MW, od toga je 5.661 MW priključeno na prijenosnu mrežu, odnosno 79 %, a ostalih 21 % je priključeno na distribucijsku mrežu.',
+    d: 'Hidroelektrane, termoelektrane, nuklearna elektrana (NE Krško, 50 % suvlasništvo), vjetroelektrane i sunčane elektrane. Generatori proizvode na 6–25 kV, a blok-transformatori odmah dižu napon za prijenos. Mješavina tehnologija (miks) određuje cijenu, emisije i fleksibilnost cijelog sustava. Priključna snaga svih elektrana u Hrvatskoj krajem 2025. bila je 7.204 MW, od toga je 5.661 MW priključeno na prijenosnu mrežu, odnosno 79 %, a ostalih 21 % je priključeno na distribucijsku mrežu.',
     facts: [['7 204 MW', 'priključna snaga svih elektrana (kraj 2025.)'], ['79 %', 'na prijenosnoj mreži'], ['21 %', 'na distribucijskoj mreži']] },
   { id: 'ts1', ic: 'TS', c: 'var(--ink)', t: 'Blok-transformacija', s: 'Podizanje napona na 400/220/110 kV',
     d: 'Transformator diže napon da bi struja — a s njom i gubici (P = I²R) — bila što manja. Ista energija na 400 kV putuje s tisuću puta manjim gubicima nego na 10 kV. Zato velike elektrane "izlaze" izravno na najviše naponske razine.',
@@ -92,13 +92,13 @@ const CHAIN = [
     d: 'Hrvatski operator prijenosnog sustava (HOPS) vodi mrežu 400, 220 i 110 kV te Nacionalni dispečerski centar. Okosnicu čini 400 kV prsten Ernestinovo–Žerjavinec–Tumbri–Melina–Velebit–Konjsko sa sedam interkonekcija prema susjedima. Mreža se vodi po kriteriju N-1: ispad bilo kojeg elementa ne smije ugroziti napajanje.',
     facts: [['≈ 7 500 km', 'vodova 400+220+110 kV'], ['7', '400 kV interkonekcija'], ['N-1', 'sigurnosni kriterij']] },
   { id: 'ts2', ic: 'TS', c: 'var(--kv110)', t: 'Trafostanice 110/x kV', s: 'Sučelje prijenosa i distribucije',
-    d: 'U velikim trafostanicama energija silazi s prijenosnih na distribucijske napone (35, 20 i 10 kV). Tu su i rasklopna postrojenja — "križanja" u kojima dispečeri sklopkama preusmjeravaju tokove, izoliraju kvarove i održavaju pogonsku spremnost mreže.',
+    d: 'U velikim trafostanicama energija silazi s prijenosnih na distribucijske napone (35, 20 i 10 kV). Tu su i rasklopna postrojenja, "križanja" u kojima dispečeri sklopkama preusmjeravaju tokove, izoliraju kvarove i održavaju pogonsku spremnost mreže.',
     facts: [['110/35/20/10 kV', 'tipične transformacije'], ['> 24 000', 'trafostanica u distribuciji'], ['SCADA', 'daljinsko vođenje']] },
   { id: 'dis', ic: '0,4 kV', c: 'var(--kv220)', t: 'Distribucijska mreža · HEP ODS', s: 'Kapilare do svakog kućanstva',
-    d: 'HEP Operator distribucijskog sustava vodi mrežu srednjeg i niskog napona — preko 140 000 km vodova do 2,5 milijuna kupaca. Posljednji transformator spušta napon na 0,4 kV (400/230 V). Distribucija se ubrzano mijenja: kupci s krovnim solarima postaju proizvođači-potrošači, a tokovi snage sve češće teku "uzbrdo".',
+    d: 'HEP Operator distribucijskog sustava vodi mrežu srednjeg i niskog napona: preko 140 000 km vodova do 2,5 milijuna kupaca. Posljednji transformator spušta napon na 0,4 kV (400/230 V). Distribucija se ubrzano mijenja: kupci s krovnim solarima postaju proizvođači-potrošači, a tokovi snage sve češće teku "uzbrdo".',
     facts: [['> 140 000 km', 'vodova'], ['≈ 2,5 mil.', 'obračunskih mjernih mjesta'], ['0,4 kV', 'napon u utičnici (230 V fazno)']] },
   { id: 'con', ic: 'P', c: 'var(--ink)', t: 'Potrošači', s: 'Kućanstva, industrija, promet',
-    d: 'Krajnja karika koja sve pokreće — potrošnja se ne naručuje, nego predviđa. Sustav u svakom trenutku proizvodi točno onoliko koliko se troši. Potrošači postaju aktivni: upravljanje potrošnjom, kućne baterije i punjenje električnih vozila izvan vršnih sati pretvaraju potrošnju iz zadanog uvjeta u alat optimizacije.',
+    d: 'Krajnja karika koja sve pokreće: potrošnja se ne naručuje, nego predviđa. Sustav u svakom trenutku proizvodi točno onoliko koliko se troši. Potrošači postaju aktivni: upravljanje potrošnjom, kućne baterije i punjenje električnih vozila izvan vršnih sati pretvaraju potrošnju iz zadanog uvjeta u alat optimizacije.',
     facts: [['≈ 18 TWh', 'godišnja potrošnja RH'], ['≈ 3 200 MW', 'povijesni vrh sustava'], ['24/7', 'prognoza potrošnje u NDC-u']] }
 ];
 
@@ -107,7 +107,7 @@ const CHAIN = [
    ispod lanca. */
 const STORAGE = {
   ic: 'BESS', c: 'var(--amber)', t: 'Pohrana energije', s: 'Priključuje se na svim razinama mreže',
-  d: 'Pohrana ne stoji na jednom mjestu u lancu — priključuje se na razini prijenosa (velike baterije i RHE Velebit), na distribuciji (spremnici uz sunčane elektrane) i sve češće iza brojila, u kućanstvima uz krovni solar. Zajedničko im je da razdvajaju trenutak proizvodnje od trenutka potrošnje.',
+  d: 'Pohrana ne stoji na jednom mjestu u lancu: priključuje se na razini prijenosa (velike baterije i RHE Velebit), na distribuciji (spremnici uz sunčane elektrane) i sve češće iza brojila, u kućanstvima uz krovni solar. Zajedničko im je da razdvajaju trenutak proizvodnje od trenutka potrošnje.',
   // Broj najavljenih baterijskih projekata je namjerno izostavljen: registri se
   // razlikuju, dio projekata je na distribuciji, a broj se mijenja prebrzo da bi
   // stajao u ugrađenoj konstanti.
@@ -222,33 +222,33 @@ const PLANTS = [
   { n: 'HE Lešće', hep: 1, t: 'hidro', mw: 41.2, ll: [15.32,45.38], d: 'Najmlađa velika HE u RH (2010.), na rijeci Dobri.' },
   { n: 'HE Đale', hep: 1, t: 'hidro', mw: 41, ll: [16.62,43.6], d: 'Protočna HE na Cetini između Peruće i Zakučca.' },
   { n: 'TE Plomin', hep: 1, t: 'termo', mw: 217, ll: [14.17,45.13], lbl: 1, d: 'Jedina hrvatska TE na ugljen (blok 2, 217 MW), u Istri. Bazna jedinica; planira se izlazak iz pogona. Stariji blok 1 (120 MW, 1970.) gasi se.' },
-  { n: 'TE-TO Zagreb', hep: 1, t: 'termo', mw: 300, ll: [16.08,45.78], lbl: 1, d: 'Najveće termoenergetsko postrojenje u RH (300 MW električne snage): kombi-kogeneracijski plinski blokovi koji uz struju griju zagrebački toplinski sustav. Toplina je ovdje glavni posao — struja nastaje usput, pa se pogon vodi prema potrebi grijanja, ne prema cijeni na tržištu.' },
+  { n: 'TE-TO Zagreb', hep: 1, t: 'termo', mw: 300, ll: [16.08,45.78], lbl: 1, d: 'Najveće termoenergetsko postrojenje u RH (300 MW električne snage): kombi-kogeneracijski plinski blokovi koji uz struju griju zagrebački toplinski sustav. Toplina je ovdje glavni posao, struja nastaje usput, pa se pogon vodi prema potrebi grijanja, ne prema cijeni na tržištu.' },
   { n: 'TE-TO Sisak', hep: 1, t: 'termo', mw: 228, ll: [16.38,45.47], d: 'Kombi-kogeneracijski plinski blok C, 228 MW električne snage. Na istoj lokaciji radi i BE-TO Sisak na biomasu (3 MW električne, 10 MW toplinske).' },
-  { n: 'TE Rijeka', hep: 1, t: 'termo', mw: 320, st: 'off', ll: [14.52,45.29], d: 'TE na loživo ulje na Urinju; godinama u hladnoj rezervi — primjer kapaciteta koji čeka odluku o budućnosti lokacije.' },
+  { n: 'TE Rijeka', hep: 1, t: 'termo', mw: 320, st: 'off', ll: [14.52,45.29], d: 'TE na loživo ulje na Urinju; godinama u hladnoj rezervi, primjer kapaciteta koji čeka odluku o budućnosti lokacije.' },
   { n: 'EL-TO Zagreb', hep: 1, t: 'termo', mw: 50, ll: [15.95,45.79], d: 'Stara plinska kogeneracija na zagrebačkoj Trešnjevci (1907.), 50 MW električne snage: pretežno toplinarstvo, uz struju i paru za industriju. Novi blok je u dogradnji i još nije na mreži.' },
   { n: 'TE-TO Osijek', hep: 1, t: 'termo', mw: 89, ll: [18.66,45.55], d: 'Plinska kogeneracija za Osijek: električna energija i centralno grijanje.' },
   { n: 'KTE Jertovec', hep: 1, t: 'termo', mw: 78, st: 'off', ll: [16.13,46.03], d: 'Plinska elektrana u Hrvatskom zagorju (1954.), godinama u vršnoj i rezervnoj ulozi; u gašenju.' },
-  { n: 'NE Krško', hep: 1, t: 'nuk', mw: 348, ll: [15.49,45.95], lbl: 1, d: 'Nuklearna elektrana u Sloveniji (696 MW), u 50 % suvlasništvu HEP-a — hrvatska polovica (≈ 348 MW) pokriva oko 15 % potrošnje RH. Bazna, niskougljična proizvodnja s pogonom produljenim do 2043.' },
+  { n: 'NE Krško', hep: 1, t: 'nuk', mw: 348, ll: [15.49,45.95], lbl: 1, d: 'Nuklearna elektrana u Sloveniji (696 MW), u 50 % suvlasništvu HEP-a; hrvatska polovica (≈ 348 MW) pokriva oko 15 % potrošnje RH. Bazna, niskougljična proizvodnja s pogonom produljenim do 2043.' },
   { n: 'VE Senj', t: 'vjetar', mw: 156, ll: [15.02,44.92], lbl: 1, d: 'Najveća vjetroelektrana u RH (39 turbina na Senjskom bilu); koristi buru i jugo velebitskog podgorja.' },
   { n: 'VE Krš-Pađene', t: 'vjetar', mw: 142, ll: [16.02,44.1], d: 'Velika VE kod Knina, priključena izravno na prijenosnu mrežu.' },
   { n: 'VE Korlat', hep: 1, t: 'vjetar', mw: 58, ll: [15.55,44.12], d: 'VE u zadarskom zaleđu; prva velika elektrana HEP-a na vjetar.' },
   { n: 'VE Vrataruša', t: 'vjetar', mw: 42, ll: [14.98,45.05], d: 'Jedna od prvih velikih VE u RH, iznad Senja.' },
   { n: 'VE Ponikve', t: 'vjetar', mw: 37, ll: [17.55,42.93], d: 'VE na Pelješcu; ukupno je u RH u pogonu ≈ 1,2 GW vjetroelektrana, pretežno u Dalmaciji i Lici.' },
-  { n: 'SE Obrovac', hep: 1, t: 'sunce', mw: 7.35, ll: [15.68,44.2], d: 'Jedna od prvih većih mrežnih sunčanih elektrana HEP-a (priključna snaga 7,35 MW). Ukupni solar u RH prešao je 1,2 GW i najbrže je rastući izvor — većinom raspršen po krovovima, izvan prijenosne mreže.' },
+  { n: 'SE Obrovac', hep: 1, t: 'sunce', mw: 7.35, ll: [15.68,44.2], d: 'Jedna od prvih većih mrežnih sunčanih elektrana HEP-a (priključna snaga 7,35 MW). Ukupni solar u RH prešao je 1,2 GW i najbrže je rastući izvor, većinom raspršen po krovovima, izvan prijenosne mreže.' },
   { n: 'SE Kaštelir i Marići', hep: 1, t: 'sunce', mw: 4, ll: [13.8,45.3], d: 'Među prvim sunčanim elektranama su Kaštelir i Marići, nalaze se u Istri i ukupne snage su 4 MW.' },
-  { n: 'SE Vis', hep: 1, t: 'sunce', mw: 3.5, ll: [16.13,43.06], d: 'Otočna SE koja smanjuje ovisnost Visa o podmorskom kabelu — primjer solara kao lokalne infrastrukture.' },
+  { n: 'SE Vis', hep: 1, t: 'sunce', mw: 3.5, ll: [16.13,43.06], d: 'Otočna SE koja smanjuje ovisnost Visa o podmorskom kabelu, primjer sunčane elektrane kao lokalne infrastrukture.' },
   // --- dopunjeno koordinatama (HEP-ove elektrane i VE izvan MINGO registra) ---
   { n: 'HE Rijeka', hep: 1, t: 'hidro', mw: 36.8, ll: [14.45,45.33], d: 'Visokotlačna derivacijska HE na Rijeci; koristi vode Lokvarskog i Bajerskog jezera. Ne treba je miješati s TE Rijeka na Urinju.' },
   { n: 'HE Sklope', hep: 1, t: 'hidro', mw: 22.5, ll: [15.27,44.69], d: 'Akumulacijska HE na Lici, dio ličkog hidroenergetskog sustava; radi u kaskadi s HE Senj.' },
-  { n: 'HE Miljacka', hep: 1, t: 'hidro', mw: 20, ll: [16.018,44.003], d: 'Jedna od najstarijih HE u RH (1906.), na Krki kod Skradina — još u pogonu nakon više od stoljeća.' },
+  { n: 'HE Miljacka', hep: 1, t: 'hidro', mw: 20, ll: [16.018,44.003], d: 'Jedna od najstarijih HE u RH (1906.), na Krki kod Skradina, još u pogonu nakon više od stoljeća.' },
   { n: 'SE Korlat', hep: 1, t: 'sunce', mw: 75, ll: [15.55,44.12], d: 'Najveća sunčana elektrana u RH (75 MW), na mreži od lipnja 2026.; na istoj lokaciji kao VE Korlat — energetski park u kojem vjetar i sunce dijele priključak, uz planove za baterijski sustav.' },
   { n: 'SE Čakovec', hep: 1, t: 'sunce', mw: 8.5, st: 'soon', ll: [16.46,46.38], d: 'Sunčana elektrana HEP-a u Međimurju; izgrađena, ali još nije priključena na mrežu.' },
   { n: 'SE Dugopolje', hep: 1, t: 'sunce', mw: 10, ll: [16.55,43.58], d: 'Sunčana elektrana HEP-a u zaleđu Splita.' },
   // --- manje HEP-ove HE (≥ 3 MW) koje su dosad nedostajale ---
-  { n: 'HE Jaruga', hep: 1, t: 'hidro', mw: 7.2, ll: [15.96,43.8], d: 'Na Skradinskom buku, u pogonu od 1903. — druga hidroelektrana izmjenične struje u svijetu, samo dva dana mlađa od one na Niagari.' },
+  { n: 'HE Jaruga', hep: 1, t: 'hidro', mw: 7.2, ll: [15.96,43.8], d: 'Na Skradinskom buku, u pogonu od 1903., druga hidroelektrana izmjenične struje u svijetu, samo dva dana mlađa od one na Niagari.' },
   { n: 'HE Golubić', hep: 1, t: 'hidro', mw: 6.54, ll: [16.17,44.08], d: 'HE na Butišnici kod Knina; uz opskrbu mreže služi i vodoopskrbi šireg kninskog područja.' },
   { n: 'CHE Fužine', hep: 1, t: 'hidro', mw: 4.5, ll: [14.71,45.3], d: 'Crpno-akumulacijska HE u Gorskom kotaru (1957.); s jezerom Bajer dio je lančanog sustava koji vodu koristi više puta.' },
-  { n: 'HE Ozalj 1 i 2', hep: 1, t: 'hidro', mw: 3.54, ll: [15.47,45.61], d: 'Protočna HE na Kupi iz 1908., u secesijskoj zgradi — još uvijek u pogonu.' },
+  { n: 'HE Ozalj 1 i 2', hep: 1, t: 'hidro', mw: 3.54, ll: [15.47,45.61], d: 'Protočna HE na Kupi iz 1908., u secesijskoj zgradi, još uvijek u pogonu.' },
   // --- HEP-ovi solari ≥ 5 MW; koordinate su na razini naselja po kojem je elektrana imenovana ---
   { n: 'SE Donja Dubrava', hep: 1, t: 'sunce', mw: 9.99, ll: [16.75,46.32], d: 'Sunčana elektrana uz HE Dubrava na Dravi (2023.) — solar se gradi na već priključenoj lokaciji, pa dijeli postojeći izvod.' },
   { n: 'SE Črnkovci', hep: 1, t: 'sunce', mw: 8.5, ll: [18.31,45.7], d: 'Sunčana elektrana u Slavoniji (2025.); primjer širenja HEP-ovog solara izvan priobalja, gdje je ozračenost manja ali je zemljište dostupnije.' },
@@ -283,7 +283,7 @@ const PLANTS = [
   { n: 'VE Kom-Orjak-Greda', t: 'vjetar', mw: 10, ll: [16.8063,43.4717], d: 'Vjetroelektrana, priključna snaga 10,0 MW (nositelj: KELAG INTERNATIONAL d.o.o.). Podaci: registar OIE projekata Ministarstva gospodarstva.' },
   { n: 'VE Crno Brdo', t: 'vjetar', mw: 10, ll: [16.0069,43.7112], d: 'Vjetroelektrana, priključna snaga 10,0 MW. Podaci: registar OIE projekata Ministarstva gospodarstva.' },
   { n: 'VE Jasenice', t: 'vjetar', mw: 10, ll: [15.6546,44.2248], d: 'Vjetroelektrana, priključna snaga 10,0 MW (nositelj: VJETROPARK JASENICE d.o.o.). Podaci: registar OIE projekata Ministarstva gospodarstva.' },
-  { n: 'GTE Velika Ciglena', t: 'geo', mw: 10, ll: [16.93,45.86], d: 'Prva hrvatska geotermalna elektrana (ORC ciklus, ≈ 10 MW) kraj Bjelovara; koristi vrelu vodu panonskog bazena — proizvodi 24/7.' }
+  { n: 'GTE Velika Ciglena', t: 'geo', mw: 10, ll: [16.93,45.86], d: 'Prva hrvatska geotermalna elektrana (ORC ciklus, ≈ 10 MW) kraj Bjelovara; koristi vrelu vodu panonskog bazena, proizvodi 24/7.' }
 ];
 
 (function buildMap() {
@@ -553,14 +553,14 @@ function solarShape(season, h) {
 const TECH = [
   { n: 'Akumulacijske hidroelektrane', c: 'var(--c-hidro)', role: 'Fleksibilna / vršna', co2: '≈ 5 g/kWh', eff: 'η ≈ 90 %',
     how: 'Brana stvara akumulaciju; potencijalna energija vode pretvara se u električnu kad sustavu najviše treba. Snagu mijenjaju u minutama.',
-    p: ['Vrlo brz odziv — glavna regulacijska snaga sustava', 'Skladištenje energije (dnevno do sezonski)', 'Domaći resurs, gotovo nulti trošak goriva i emisije'],
+    p: ['Vrlo brz odziv, glavna regulacijska snaga sustava', 'Skladištenje energije (dnevno do sezonski)', 'Domaći resurs, gotovo nulti trošak goriva i emisije'],
     m: ['Proizvodnja ovisi o hidrologiji (sušne godine)', 'Veliki zahvat u prostor i riječne ekosustave', 'Najbolje lokacije u RH već su iskorištene'],
     hr: 'U Hrvatskoj: Zakučac, Peruća, Orlovac, Senj, Dubrovnik… U vlažnim godinama hidroelektrane daju i preko polovice domaće proizvodnje.' },
   { n: 'Protočne hidroelektrane', c: 'var(--c-hidro)', role: 'Bazna (varijabilna)', co2: '≈ 5 g/kWh', eff: 'η ≈ 90 %',
-    how: 'Koriste prirodni protok rijeke bez veće akumulacije — proizvode koliko rijeka donese.',
+    how: 'Koriste prirodni protok rijeke bez veće akumulacije: proizvode koliko rijeka donese.',
     p: ['Kontinuirana, predvidljiva dnevna proizvodnja', 'Dug životni vijek (50–100 godina)', 'Niski pogonski troškovi'],
     m: ['Bez mogućnosti skladištenja i regulacije', 'Osjetljive na suše i promjene režima rijeka', 'Utjecaj na riječnu faunu (riblje staze)'],
-    hr: 'U Hrvatskoj: dravska kaskada Varaždin–Čakovec–Dubrava, HE Đale — mirna bazna proizvodnja sjevera.' },
+    hr: 'U Hrvatskoj: dravska kaskada Varaždin–Čakovec–Dubrava, HE Đale, mirna bazna proizvodnja sjevera.' },
   { n: 'Reverzibilne HE (pumpna pohrana)', c: 'var(--c-hidro)', role: 'Pohrana', co2: 'ovisno o punjenju', eff: 'ciklus ≈ 75 %',
     how: 'Dva jezera na različitim visinama: u višku energije pumpa vodu gore, u manjku je pušta kroz turbinu dolje.',
     p: ['Najveća dokazana tehnologija pohrane na svijetu', 'Pruža rezervu, regulaciju i pokretanje sustava iz beznaponskog stanja', 'Pretvara jeftine viškove (solar u podne) u skupe vrhove'],
@@ -568,43 +568,43 @@ const TECH = [
     hr: 'U Hrvatskoj: RHE Velebit kod Obrovca (270 MW turbinski / 240 MW pumpni), u pogonu od 1984. Pumpni rad je neko vrijeme bio ograničen; danas radi kao dnevna pohrana i pružatelj rezerve.' },
   { n: 'Plinske termoelektrane (kombi/kogeneracija)', c: 'var(--c-termo)', role: 'Fleksibilna / vršna', co2: '≈ 350–450 g/kWh', eff: 'η do 60 % (el.)',
     how: 'Plinska turbina + iskorištavanje ispušne topline u parnoj turbini (kombi ciklus); kogeneracija dodatno isporučuje toplinu gradovima.',
-    p: ['Brzo pokretanje i promjena snage — prati vjetar i sunce', 'Najviša učinkovitost među termoelektranama', 'Kogeneracija: ista energija goriva za struju i grijanje'],
+    p: ['Brzo pokretanje i promjena snage, prati vjetar i sunce', 'Najviša učinkovitost među termoelektranama', 'Kogeneracija: ista energija goriva za struju i grijanje'],
     m: ['Ovisnost o uvozu i cijeni plina', 'Emisije CO₂ i trošak ETS dozvola', 'Skupi sati rada često određuju tržišnu cijenu'],
     hr: 'U Hrvatskoj: TE-TO Zagreb, TE-TO Sisak, EL-TO Zagreb, TE-TO Osijek, KTE Jertovec.' },
   { n: 'Termoelektrane na ugljen', c: 'var(--c-ugljen)', role: 'Bazna', co2: '≈ 850–1000 g/kWh', eff: 'η ≈ 35–42 %',
     how: 'Izgaranje ugljena grije paru koja pokreće turbinu. Stoljeće okosnica elektroenergetike, danas u povlačenju.',
     p: ['Stabilna, upravljiva bazna proizvodnja', 'Gorivo se lako skladišti (sigurnost opskrbe)', 'Povijesno nizak trošak goriva'],
     m: ['Najveće emisije CO₂ i onečišćenja zraka', 'Spora regulacija snage', 'ETS trošak čini proizvodnju sve skupljom'],
-    hr: 'U Hrvatskoj: TE Plomin 2 (210 MW) — posljednja TE na ugljen; planira se izlazak iz pogona.' },
+    hr: 'U Hrvatskoj: TE Plomin 2 (210 MW), posljednja TE na ugljen; planira se izlazak iz pogona.' },
   { n: 'Nuklearna energija', c: 'var(--c-nuk)', role: 'Bazna', co2: '≈ 10 g/kWh', eff: 'faktor iskorištenja > 90 %',
     how: 'Fisija urana grije vodu primarnog kruga; para u sekundarnom krugu pokreće turbinu. Ogromna gustoća energije.',
     p: ['Goleme količine niskougljične energije 24/7', 'Malen prostorni otisak po MWh', 'Stabilizira sustav velikom rotirajućom inercijom'],
-    m: ['Vrlo visoka investicija i dugotrajna gradnja', 'Trajno zbrinjavanje radioaktivnog otpada', 'Ograničena fleksibilnost — najbolje radi punom snagom'],
+    m: ['Vrlo visoka investicija i dugotrajna gradnja', 'Trajno zbrinjavanje radioaktivnog otpada', 'Ograničena fleksibilnost, najbolje radi punom snagom'],
     hr: 'U Hrvatskoj: 50 % NE Krško (≈ 348 MW hrvatskog udjela) pokriva ~15 % potrošnje; pogon produljen do 2043.' },
   { n: 'Vjetroelektrane', c: 'var(--c-vjetar)', role: 'Varijabilna OIE', co2: '≈ 10 g/kWh', eff: 'faktor iskorištenja ≈ 25–35 %',
     how: 'Kinetička energija vjetra okreće rotor; pretvarači predaju energiju mreži. Snaga raste s trećom potencijom brzine vjetra.',
-    p: ['Bez goriva i emisija u pogonu', 'Brza gradnja i konkurentan trošak energije', 'U RH često proizvodi zimi i noću — dopunjuje solar'],
-    m: ['Varijabilnost — treba rezervu i prognozu', 'Bura donosi nagle rampe snage (i prisilna zaustavljanja)', 'Prostorni i krajobrazni utjecaj, ptice'],
-    hr: 'U Hrvatskoj: 29 vjetroelektrana, ukupno ≈ 1 157 MW priključne snage (prema izvješću HOPS-a za 2025. godinu) — VE Senj, Krš-Pađene, Korlat i druge, pretežno na dalmatinskom i ličkom krševitom zaleđu.' },
+    p: ['Bez goriva i emisija u pogonu', 'Brza gradnja i konkurentan trošak energije', 'U RH često proizvodi zimi i noću, dopunjuje solar'],
+    m: ['Varijabilnost: treba rezervu i prognozu', 'Bura donosi nagle rampe snage (i prisilna zaustavljanja)', 'Prostorni i krajobrazni utjecaj, ptice'],
+    hr: 'U Hrvatskoj: 29 vjetroelektrana, ukupno ≈ 1 157 MW priključne snage (prema izvješću HOPS-a za 2025. godinu): VE Senj, Krš-Pađene, Korlat i druge, pretežno na dalmatinskom i ličkom krševitom zaleđu.' },
   { n: 'Sunčane elektrane', c: 'var(--c-sunce)', role: 'Varijabilna OIE', co2: '≈ 30 g/kWh', eff: 'faktor iskorištenja ≈ 12–17 %',
     how: 'Fotonaponski moduli izravno pretvaraju svjetlost u istosmjernu struju; izmjenjivači je predaju mreži.',
-    p: ['Najjeftinija nova proizvodnja energije', 'Gradi se od krova do polja — distribuirano, blizu potrošnje', 'Vršna proizvodnja poklapa se s ljetnim klima-vrhom'],
-    m: ['Ništa noću, malo zimi — treba pohranu ili uvoz', '"Pačja krivulja": strma večernja rampa za ostatak sustava', 'Bez rotirajuće inercije (pretvarački priključak)'],
-    hr: 'U Hrvatskoj: ≈ 1,25 GW i najbrži rast; velika većina te snage priključena je na distribucijsku mrežu — krovovi kućanstava i tvrtki.' },
+    p: ['Najjeftinija nova proizvodnja energije', 'Gradi se od krova do polja, distribuirano i blizu potrošnje', 'Vršna proizvodnja poklapa se s ljetnim klima-vrhom'],
+    m: ['Ništa noću, malo zimi: treba pohranu ili uvoz', '"Pačja krivulja": strma večernja rampa za ostatak sustava', 'Bez rotirajuće inercije (pretvarački priključak)'],
+    hr: 'U Hrvatskoj: ≈ 1,25 GW i najbrži rast; velika većina te snage priključena je na distribucijsku mrežu, krovovi kućanstava i tvrtki.' },
   { n: 'Biomasa i bioplin', c: 'var(--kv220)', role: 'Bazna / fleksibilna OIE', co2: 'nisko (ciklus CO₂)', eff: 'η ≈ 25–35 % (+ toplina)',
     how: 'Izgaranje drvne sječke ili bioplina iz poljoprivrednog otpada; često kogeneracija sa strujom i toplinom.',
     p: ['Upravljiva obnovljiva proizvodnja (radi i noću, i zimi)', 'Lokalni razvoj i korištenje otpadnih tokova', 'Toplina za gradove i industriju'],
     m: ['Ograničen održivi potencijal goriva', 'Logistika i cijena biomase', 'Emisije čestica bez dobre filtracije'],
-    hr: 'U Hrvatskoj: niz manjih kogeneracija (Slavonija, Gorski kotar) — pojedinačno male, zajedno stabilan doprinos.' },
+    hr: 'U Hrvatskoj: niz manjih kogeneracija (Slavonija, Gorski kotar), pojedinačno male, zajedno stabilan doprinos.' },
   { n: 'Geotermalna energija', c: 'var(--c-geo)', role: 'Bazna OIE', co2: '≈ 20–40 g/kWh', eff: 'faktor iskorištenja > 80 %',
     how: 'Vrela voda iz dubokih bušotina predaje toplinu organskom radnom mediju (ORC) koji pokreće turbinu.',
     p: ['Obnovljiva proizvodnja 24/7, neovisna o vremenu', 'Panonski bazen ima natprosječni geotermalni gradijent', 'Otpadna toplina korisna za staklenike i grijanje'],
     m: ['Visok geološki rizik bušenja (skupa istraživanja)', 'Ograničen broj isplativih lokacija', 'Mala jedinična snaga postrojenja'],
-    hr: 'U Hrvatskoj: GTE Velika Ciglena (≈ 10 MW) kraj Bjelovara — prva geotermalna elektrana; više polja u istraživanju.' },
+    hr: 'U Hrvatskoj: GTE Velika Ciglena (≈ 10 MW) kraj Bjelovara, prva geotermalna elektrana; više polja u istraživanju.' },
   { n: 'Baterijski sustavi pohrane (BESS)', c: 'var(--amber)', role: 'Pohrana', co2: 'ovisno o punjenju', eff: 'ciklus ≈ 85–92 %',
     how: 'Litij-ionske baterije s pretvaračima; pune se u viškovima, prazne u vrhovima ili trenutno reagiraju na frekvenciju.',
-    p: ['Odziv u milisekundama — idealno za regulaciju frekvencije', 'Modularno i brzo za izgradnju, bilo gdje u mreži', 'Uz solar: pomiče podnevni višak u večernji vrh'],
-    m: ['Tipično 1–4 sata kapaciteta — ne rješava sezonu', 'Degradacija ćelija kroz cikluse', 'Ovisnost o kritičnim sirovinama (litij, kobalt)'],
+    p: ['Odziv u milisekundama, idealno za regulaciju frekvencije', 'Modularno i brzo za izgradnju, bilo gdje u mreži', 'Uz solar: pomiče podnevni višak u večernji vrh'],
+    m: ['Tipično 1–4 sata kapaciteta, ne rješava sezonu', 'Degradacija ćelija kroz cikluse', 'Ovisnost o kritičnim sirovinama (litij, kobalt)'],
     hr: 'U Hrvatskoj: prvi veliki mrežni BESS projekti u izgradnji; očekuje se ključna uloga uz nagli rast solara.' }
 ];
 
@@ -735,13 +735,13 @@ const TECH = [
     // poruke
     const msgs = [];
     const marg = disp[disp.length - 1];
-    if (shortage) msgs.push('<b>Manjak od ' + fmt(D - served) + ' MW!</b> Ni uz maksimalan uvoz potrošnja nije pokrivena — u stvarnosti slijede hitne mjere i vrlo visoke cijene uravnoteženja.');
-    else msgs.push('Granična jedinica: <b>' + marg.n + '</b> (' + fmt(marg.cost) + ' €/MWh) — njezin trošak postaje cijena za sve angažirane izvore.');
+    if (shortage) msgs.push('<b>Manjak od ' + fmt(D - served) + ' MW!</b> Ni uz maksimalan uvoz potrošnja nije pokrivena. U stvarnosti slijede hitne mjere i vrlo visoke cijene uravnoteženja.');
+    else msgs.push('Granična jedinica: <b>' + marg.n + '</b> (' + fmt(marg.cost) + ' €/MWh). Njezin trošak postaje cijena za sve angažirane izvore.');
     if (exp > 0) msgs.push('Jeftina proizvodnja premašuje potrošnju: <b>RHE pumpa ' + fmt(pump) + ' MW</b>, izvozi se ' + fmt(exp) + ' MW' + (curt > 0 ? ', a ' + fmt(curt) + ' MW se ograničava (curtailment)' : '') + '. Cijene padaju prema nuli ili u minus.');
     else if (pump > 0) msgs.push('Višak jeftine energije: RHE Velebit pumpa ' + fmt(pump) + ' MW u gornje jezero.');
     if (impU && impU.p > 0 && !shortage) msgs.push('Uvoz je u voznom redu <b>prije domaćih termoelektrana</b> dok god je jeftiniji od njih — pomaknite cijenu uvoza iznad ~96 €/MWh i gledajte kako se redoslijed mijenja.');
-    if (marg && (marg.n === 'Plinske TE' || marg.n === 'TE Plomin (ugljen)')) msgs.push('Cijenu postavlja fosilna jedinica — tipična situacija u večernjem vrhu. Više vjetra, sunca ili hidrologije istisnulo bi je iz voznog reda.');
-    if (co2 > 0) msgs.push('Emisije potječu od ' + (disp.filter(u => u.co2 > 0).map(u => u.n).join(', ')) + ' — pretpostavljeni faktori: ugljen 0,95, plin 0,37, uvoz 0,30 t CO₂/MWh.');
+    if (marg && (marg.n === 'Plinske TE' || marg.n === 'TE Plomin (ugljen)')) msgs.push('Cijenu postavlja fosilna jedinica, tipična situacija u večernjem vrhu. Više vjetra, sunca ili hidrologije istisnulo bi je iz voznog reda.');
+    if (co2 > 0) msgs.push('Emisije potječu od ' + (disp.filter(u => u.co2 > 0).map(u => u.n).join(', ')) + '. Pretpostavljeni faktori: ugljen 0,95, plin 0,37, uvoz 0,30 t CO₂/MWh.');
     $('#simMsgs').innerHTML = msgs.map(m => '<li>' + m + '</li>').join('');
   }
 
@@ -1042,14 +1042,14 @@ const TECH = [
     { n: '1 · Sušna godina + hladni val', short: 'Sušna zima', when: 'Zimska večer, hidrologija podbacila, cijene u regiji visoke.',
       p: { dem: 3200, hyd: 'suho', windMW: 290, sunMW: 100, imp: 180 },
       c: ['Akumulacije čuvaju vodu → domaća hidroproizvodnja prepolovljena.',
-          'Manjak pokriva masovan uvoz po 180 €/MWh — cijenu diktira regija, ne Hrvatska.',
+          'Manjak pokriva masovan uvoz po 180 €/MWh, cijenu diktira regija, ne Hrvatska.',
           'Emisije se ne vide u domaćoj statistici, ali se "uvoze" kroz regionalni miks.',
           'Upravo ovakve zime dižu godišnju uvoznu ovisnost prema 30 %.'] },
     { n: '2 · Solarno podne 2030. (3,5 GW sunca)', short: 'Solarno podne', when: 'Vedar proljetni dan, niska potrošnja, solar na maksimumu.',
       p: { dem: 2400, hyd: 'prosjek', windMW: 540, sunMW: 2975, imp: 20 },
       c: ['Proizvodnja bez goriva premašuje cijelu potrošnju — cijena pada na nulu (u praksi i u minus).',
           'RHE i baterije pune se do vrha, višak se izvozi dok interkonekcije ne "napune".',
-          'Ostatak se mora ograničiti (curtailment) — besplatna energija se baca.',
+          'Ostatak se mora ograničiti (curtailment), besplatna energija se baca.',
           'Vrijednost pohrane i fleksibilne potrošnje raste brže od vrijednosti novih panela.'] },
     { n: '3 · Izlazak iz ugljena (Plomin ugašen)', short: 'Bez ugljena', when: 'Zimska večer nakon zatvaranja TE Plomin, bez sunca.',
       p: { dem: 2900, hyd: 'prosjek', windMW: 464, sunMW: 0, imp: 110, plomin: false },
@@ -1063,18 +1063,18 @@ const TECH = [
           'Frekvenciju više ne drži europska inercija od 400+ GW nego samo domaći rotori.',
           'Svaki ispad bloka ide ravno na FCR i podfrekventno rasterećenje → isprobaj alat "Frekvencijski odziv".',
           'Zato se N-1 kriterij i rezerve dimenzioniraju i za najgori dan, ne za prosječan.'] },
-    { n: '5 · Elektrifikacija 2035. — večernji vrh', short: 'Elektrifikacija', when: 'EV punjači i dizalice topline dižu vrh na 3 400 MW; sunce je zašlo.',
+    { n: '5 · Elektrifikacija 2035., večernji vrh', short: 'Elektrifikacija', when: 'EV punjači i dizalice topline dižu vrh na 3 400 MW; sunce je zašlo.',
       p: { dem: 3400, hyd: 'prosjek', windMW: 1125, sunMW: 0, imp: 130 },
       c: ['Solar od 3,5 GW navečer daje nulu — vrh nose vjetar, hidro i uvoz.',
           'Večernja rampa postaje strmija nego danas ("pačja krivulja" u punom obliku).',
-          'Cijenu postavlja uvoz od 130 €/MWh — elektrificirana potrošnja plaća tuđi vršni trošak.',
+          'Cijenu postavlja uvoz od 130 €/MWh, elektrificirana potrošnja plaća tuđi vršni trošak.',
           'Bez pohrane, dodatni paneli ovom satu ne pomažu ništa.'] },
     { n: '6 · Elektrifikacija + 1 GW pohrane', short: 'Elektrif. + pohrana', when: 'Isti večernji vrh kao u scenariju 5, ali s 1 GW baterija punjenih podnevnim solarom.',
       p: { dem: 3400, hyd: 'prosjek', windMW: 1125, sunMW: 0, imp: 130, bess: 1000 },
       c: ['Baterije istiskuju uvoz iz voznog reda: podnevni solar isporučen navečer.',
-          'Marginalna cijena pada sa 130 na 85 €/MWh — pohrana "izravnava" dan.',
+          'Marginalna cijena pada sa 130 na 85 €/MWh, pohrana "izravnava" dan.',
           'Uvoz u vršnom satu: nula. Sustav prolazi vrh domaćim resursima.',
-          'Usporedi sa scenarijem 5: ista potrošnja, isti vjetar — razlika je samo pohrana.'] }
+          'Usporedi sa scenarijem 5: ista potrošnja, isti vjetar, razlika je samo pohrana.'] }
   ];
 
   const results = SCN.map(s => run(s.p));
