@@ -39,26 +39,48 @@ def sat(dt):
     return dt.strftime("%Y%m%d%H%M")
 
 
-def upit(**params):
-    """Jedan poziv API-ju. Vraća korijen XML-a ili None.
+def _dohvati(params, u_zaglavlju):
+    """Jedan HTTP poziv. Vraća korijen XML-a; iznimke propušta pozivatelju."""
+    p = dict(params)
+    headers = {}
+    if u_zaglavlju:
+        headers["SECURITY_TOKEN"] = TOKEN
+    else:
+        p["securityToken"] = TOKEN
+    url = BAZA + "?" + urllib.parse.urlencode(p)
+    req = urllib.request.Request(url, headers=headers)
+    with urllib.request.urlopen(req, timeout=45) as r:
+        return ET.fromstring(r.read())
 
-    Token ide u zaglavlje, ne u query string — URL-ovi završe u logovima
-    Actiona i u povijesti, zaglavlja ne.
-    """
-    url = BAZA + "?" + urllib.parse.urlencode(params)
-    req = urllib.request.Request(url, headers={"SECURITY_TOKEN": TOKEN})
-    try:
-        with urllib.request.urlopen(req, timeout=45) as r:
-            return ET.fromstring(r.read())
-    except urllib.error.HTTPError as e:
-        # 401 = loš token, 400 = loš upit, 429 = prekoračena kvota.
-        # Ne rušimo cijeli dohvat zbog jednog upita: bolje je objaviti
-        # djelomične podatke nego nijedne.
-        print(f"  ! HTTP {e.code} za {params.get('documentType')}", file=sys.stderr)
-        return None
-    except Exception as e:  # mreža, timeout, neispravan XML
-        print(f"  ! {type(e).__name__}: {e}", file=sys.stderr)
-        return None
+
+# Zaglavlje SECURITY_TOKEN dokumentirano je za POST, a securityToken u query
+# stringu za GET. Naši upiti su GET, pa prvi pokušaj ide zaglavljem (token tada
+# nije u URL-u), a na 401 se ponavlja s parametrom. Nakon prvog uspjeha način
+# se pamti, da se ne udvostručuje svaki poziv.
+_nacin = {"zaglavlje": True}
+
+
+def upit(**params):
+    """Jedan poziv API-ju. Vraća korijen XML-a ili None."""
+    for pokusaj in (_nacin["zaglavlje"], not _nacin["zaglavlje"]):
+        try:
+            korijen = _dohvati(params, pokusaj)
+            _nacin["zaglavlje"] = pokusaj
+            return korijen
+        except urllib.error.HTTPError as e:
+            if e.code == 401 and pokusaj != (not _nacin["zaglavlje"]):
+                continue          # probaj drugi način slanja tokena
+            # 400 = loš upit, 429 = prekoračena kvota, 401 na oba načina = loš token.
+            # Ne rušimo cijeli dohvat zbog jednog upita: bolje objaviti
+            # djelomične podatke nego nijedne.
+            print(f"  ! HTTP {e.code} za {params.get('documentType')}", file=sys.stderr)
+            return None
+        except Exception as e:  # mreža, timeout, neispravan XML
+            # Ispisuje se samo tip iznimke: poruka zna sadržavati URL, a u
+            # jednom od dva načina token je u URL-u.
+            print(f"  ! {type(e).__name__} za {params.get('documentType')}", file=sys.stderr)
+            return None
+    return None
 
 
 def djeca(el, ime):
