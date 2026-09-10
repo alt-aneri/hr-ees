@@ -1,17 +1,17 @@
 {
- "osvjezeno": "2026-09-09T22:37:28+00:00",
+ "osvjezeno": "2026-09-10T01:10:29+00:00",
  "izvor": "ENTSO-E Transparency Platform",
  "zona": "10YHR-HEP------M",
- "opterecenje_mw": 1005,
- "opterecenje_vrijeme": "2026-09-09T22:15:00+00:00",
- "cijena_eur_mwh": 180.71,
+ "opterecenje_mw": 1679,
+ "opterecenje_vrijeme": "2026-09-10T00:45:00+00:00",
+ "cijena_eur_mwh": 164.14,
  "razmjena_mw": {
-  "SI": 139,
-  "HU": 932,
-  "BA": 137,
-  "RS": -89
+  "SI": 194,
+  "HU": 979,
+  "BA": -106,
+  "RS": -291
  },
- "neto_razmjena_mw": 1119,
+ "neto_razmjena_mw": 776,
  "presjek": {
   "vrijeme": null,
   "opterecenje_mw": null,
