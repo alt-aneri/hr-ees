@@ -1,42 +1,42 @@
 {
- "osvjezeno": "2026-09-19T20:49:56+00:00",
+ "osvjezeno": "2026-09-19T23:14:20+00:00",
  "izvor": "ENTSO-E Transparency Platform",
  "zona": "10YHR-HEP------M",
- "opterecenje_mw": 2011,
- "opterecenje_vrijeme": "2026-09-19T20:00:00+00:00",
- "cijena_eur_mwh": 231.0,
+ "opterecenje_mw": 734,
+ "opterecenje_vrijeme": "2026-09-19T22:30:00+00:00",
+ "cijena_eur_mwh": 200.59,
  "razmjena_mw": {
-  "SI": 597,
-  "HU": 651,
-  "BA": 38,
-  "RS": -97
+  "SI": 431,
+  "HU": 622,
+  "BA": -110,
+  "RS": -222
  },
- "neto_razmjena_mw": 1189,
+ "neto_razmjena_mw": 721,
  "presjek": {
-  "vrijeme": "2026-09-19T12:45:00+00:00",
-  "opterecenje_mw": 1704,
-  "proizvodnja_ukupno_mw": 764,
+  "vrijeme": "2026-09-19T15:00:00+00:00",
+  "opterecenje_mw": 1850,
+  "proizvodnja_ukupno_mw": 792,
   "proizvodnja_mw": {
-   "sunce": 213,
-   "kameni ugljen": 139,
-   "reverzibilna HE": 132,
-   "biomasa": 65,
-   "plin": 60,
-   "vjetar (kopno)": 49,
-   "protočna HE": 43,
-   "ostali obnovljivi": 30,
-   "akumulacijska HE": 19,
+   "akumulacijska HE": 140,
+   "kameni ugljen": 138,
+   "sunce": 122,
+   "vjetar (kopno)": 104,
+   "protočna HE": 92,
+   "plin": 78,
+   "biomasa": 67,
+   "ostali obnovljivi": 32,
    "pohrana": 10,
-   "otpad": 4,
+   "reverzibilna HE": 6,
+   "otpad": 5,
    "loživo ulje": 0,
    "geotermalna": 0
   },
   "razmjena_mw": {
-   "SI": 1108,
-   "HU": 1369,
-   "BA": -560,
-   "RS": -806
+   "SI": 908,
+   "HU": 827,
+   "BA": -176,
+   "RS": -340
   },
-  "neto_razmjena_mw": 1111
+  "neto_razmjena_mw": 1219
  }
 }
